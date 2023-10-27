@@ -296,7 +296,7 @@ function Header() {
                             </MenuItem>
                         </Menu>
                     </Box>
-                            {/**hola es para el git */}
+                            {/**hola es para el */}
                     <Menu
                         sx={{ mt: "45px" }}
                         id="menu-appbar-procesos"
