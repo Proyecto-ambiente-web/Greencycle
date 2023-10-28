@@ -151,7 +151,7 @@ function Header() {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {/*aquí no hace nada */}
+                            {/*aquí no hace nad */}
                             <Button
                                 key="Mantenimientos"
                                 onClick={handleOpenMantenimientoMenu}
