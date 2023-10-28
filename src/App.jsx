@@ -12,10 +12,11 @@ import { CentrosDeAcopio } from './components/centroAcopio/centroAcopio';
 import { DetalleCentroAcopio } from './components/centroAcopio/detalleCentroAcopio';
 import { HistorialMaterial } from './components/Historial/historialMaterial';
 import { useState } from 'react';
+import { Grid } from '@mui/material';
 
-{/*se necesita el mismo nombre de la función para el import */}
+{/*se necesita el mismo nombre de la función para el import */ }
 
-export default function App(){
+export default function App() {
   const [idUsuario, setIdUsuario] = useState(null);
 
   const router = createBrowserRouter([
@@ -23,29 +24,34 @@ export default function App(){
       path: '/',
       element: <Home />
     },
-   /* {
-      path:'*',
-      element: <PageNotFound />
-    }, */
+    /* {
+       path:'*',
+       element: <PageNotFound />
+     }, */
     {
-      path:'/mantenimientoMaterial',
+      path: '/mantenimientoMaterial',
       element: <ListMateriales />
     },
     {
-      path:'/Materialdetalle/:id', // se agrega el id porque ingresa desde otra ubicación en props
-      element: <Materialdetalle/>
+      path: '/Materialdetalle/:id', // se agrega el id porque ingresa desde otra ubicación en props
+      element: <Materialdetalle />
     },
     {
-      path:'/CentrosDeAcopio',
+      path: '/CentrosDeAcopio',
       element: <CentrosDeAcopio />
     },
     {
-      path:'/DetalleCentroAcopio/:id',
+      path: '/DetalleCentroAcopio/:id',
       element: <DetalleCentroAcopio />
     },
     {
-      path:'/HistorialMaterial',
-      element: <HistorialMaterial idUsuario={idUsuario}/>
+      path: '/HistorialMaterial',
+      element: (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} style={{ display: "flex" }} spacing={3}>
+            <HistorialMaterial idUsuario={idUsuario} />
+            <HistorialMaterial idUsuario={idUsuario} />
+          </Grid>
+      ),
     }
   ])
 

@@ -15,7 +15,7 @@ import PropTypes from "prop-types";
 
 HistorialMaterial.propTypes = { idUsuario: PropTypes.string.isRequired };
 
-export function HistorialMaterial({idUsuario}){
+export function HistorialMaterial({ idUsuario }) {
     //Resultado de consumo del API, respuesta
     const [data, setData] = useState(null);
     //Error del API
@@ -41,47 +41,52 @@ export function HistorialMaterial({idUsuario}){
                     }
                 }
             )
-    }, [idUsuario]); 
-    
+    }, [idUsuario]);
+
     if (!loaded) return (
         <Box sx={{ width: '100%' }}>
-        <LinearProgress />
-      </Box>)
+            <LinearProgress />
+        </Box>)
     if (error) return <p>Error: {error.message}</p>
 
     return (
-        <Grid container sx={{ p: 2, display: "flex", justifyContent: "center" }} spacing={3} >
+        <Grid container sx={{ p: 2, display: "flex", justifyContent: "space-between", width: "100%" }} spacing={3} >
             {/*se usa map para recorrer los item de la base de datos */}
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={data.id}>
-                    <Card>
-                        <CardHeader
-                            sx={{
-                                p: 0,
-                                padding: "10px 0p",
-                                backgroundColor: '#215b4a',
-                                color: (theme) => theme.palette.common.white,
-                                //para cambiar el estilo del subheader 
-                                '& .MuiCardHeader-subheader': {
-                                    color: (theme) => theme.palette.common.white // Cambia 'tu-color-aqui' al color que desees
-                                },
-                            }}
-                            style={{ textAlign: 'center' }}
-                            title={"Historial de Canjes de Materiales"}
-                            subheader={`Del cliente: ${data.Nombre}`}
-                        />
-                        <CardContent >
-                            <Typography sx={{display:'flex', alignItems:'center', gap:'10px',marginBottom:"10px"}} variant='body2' color='text.secondary'>
-                                <SavingsIcon /> Fecha del canjeo: {data.Fecha}
-                            </Typography>
-                            <Typography sx={{display:'flex', alignItems:'center', gap:'10px',marginBottom:"10px"}} variant='body2' color='text.secondary'>
-                                <DescriptionIcon /> Nombre del centro de acopio: {data.centroAcopio.nombre}
-                            </Typography>
-                            <Typography sx={{display:'flex', alignItems:'center', gap:'10px',marginBottom:"10px"}} variant='body2' color='text.secondary'>
-                                <ColorLensIcon /> Total de ecomonedas ganadas: {data.TotalEcoMoneda}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={data.id}>
+                <Card style={{ width: "280px" }}>
+                    <CardHeader
+                        sx={{
+                            p: 0,
+                            padding: "10px 0p",
+                            backgroundColor: '#215b4a',
+                            color: (theme) => theme.palette.common.white,
+                            //para cambiar el estilo del subheader 
+                            '& .MuiCardHeader-subheader': {
+                                color: (theme) => theme.palette.common.white // Cambia 'tu-color-aqui' al color que desees
+                            },
+                        }}
+                        style={{ textAlign: 'center' }}
+                        title={"Historial de Canjes de Materiales"}
+                        subheader={`Del cliente: ${data.Nombre}`}
+                    />
+                    <CardContent >
+                        <div
+                            style={{ display: "flex", justifyContent: "center" }}>
+                            <img src='https://previews.123rf.com/images/aprillrain/aprillrain2212/aprillrain221200638/196354278-imagen-de-caricatura-de-un-astronauta-sentado-en-una-luna-ilustraci%C3%B3n-de-alta-calidad.jpg' alt="imagen del material" className="ImagenMaterial" />
+                        </div>
+
+                        <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: "10px" }} variant='body2' color='text.secondary'>
+                            <SavingsIcon /> Fecha del canjeo: {data.Fecha}
+                        </Typography>
+                        <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: "10px" }} variant='body2' color='text.secondary'>
+                            <DescriptionIcon /> Nombre del centro de acopio: {data.centroAcopio.nombre}
+                        </Typography>
+                        <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: "10px" }} variant='body2' color='text.secondary'>
+                            <ColorLensIcon /> Total de ecomonedas ganadas: {data.TotalEcoMoneda}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
         </Grid>
     )
 }
