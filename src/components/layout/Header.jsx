@@ -17,8 +17,6 @@ import { useEffect } from "react";
 import UsuarioService from "../../services/UsuarioService";
 import InfoIcon from '@mui/icons-material/Info';
 
-//const historial = ["Historal Cupones", "Cupones", "Historial", "Cerrar sesión"];
-
 function Header() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
