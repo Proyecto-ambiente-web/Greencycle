@@ -5,11 +5,13 @@ import PropTypes from "prop-types";
 import Header from './Header';
 
 Layout.propTypes = { children: PropTypes.node.isRequired };
-export function Layout({ children }) {
+Layout.propTypes = { setIdUsuario: PropTypes.func.isRequired };
+
+export function Layout({ children, setIdUsuario }) {
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
-            <Header />
+            <Header setIdUsuario={setIdUsuario} />
             <Container
                 maxWidth="xl"
                 style={{ paddingTop: "1rem", paddingBottom: "4.5rem" }}

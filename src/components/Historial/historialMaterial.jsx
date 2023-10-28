@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -12,11 +11,11 @@ import ColorLensIcon from '@mui/icons-material/ColorLens';
 import HistorialCanjeosServices from "../../services/HistorialCanjeosServices";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import PropTypes from "prop-types";
 
+HistorialMaterial.propTypes = { idUsuario: PropTypes.string.isRequired };
 
-export function HistorialMaterial(){
-    const { id } = useParams(); //agregamos esta linea porque ingresa un prop desde la ruta 
-
+export function HistorialMaterial({idUsuario}){
     //Resultado de consumo del API, respuesta
     const [data, setData] = useState(null);
     //Error del API
@@ -26,7 +25,7 @@ export function HistorialMaterial(){
 
     useEffect(() => {
         //Lista de peliculas del API
-        HistorialCanjeosServices.getHistorialCanjeoById(id)
+        HistorialCanjeosServices.getHistorialCanjeoById(idUsuario)
             .then(response => {
                 setData(response.data.results)
                 setError(response.error)
@@ -42,7 +41,8 @@ export function HistorialMaterial(){
                     }
                 }
             )
-    }, [id]); 
+    }, [idUsuario]); 
+    
     if (!loaded) return (
         <Box sx={{ width: '100%' }}>
         <LinearProgress />

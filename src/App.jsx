@@ -11,42 +11,46 @@ import { Materialdetalle } from './components/manteMaterial/detalle';//hijo
 import { CentrosDeAcopio } from './components/centroAcopio/centroAcopio';
 import { DetalleCentroAcopio } from './components/centroAcopio/detalleCentroAcopio';
 import { HistorialMaterial } from './components/Historial/historialMaterial';
+import { useState } from 'react';
 
 {/*se necesita el mismo nombre de la función para el import */}
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />
-  },
- /* {
-    path:'*',
-    element: <PageNotFound />
-  }, */
-  {
-    path:'/mantenimientoMaterial',
-    element: <ListMateriales />
-  },
-  {
-    path:'/Materialdetalle/:id', // se agrega el id porque ingresa desde otra ubicación en props
-    element: <Materialdetalle/>
-  },
-  {
-    path:'/CentrosDeAcopio',
-    element: <CentrosDeAcopio />
-  },
-  {
-    path:'/DetalleCentroAcopio/:id',
-    element: <DetalleCentroAcopio />
-  },
-  {
-    path:'/HistorialMaterial/:id',
-    element: <HistorialMaterial />
-  }
-])
 
-export default function App() {
+export default function App(){
+  const [idUsuario, setIdUsuario] = useState(null);
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Home />
+    },
+   /* {
+      path:'*',
+      element: <PageNotFound />
+    }, */
+    {
+      path:'/mantenimientoMaterial',
+      element: <ListMateriales />
+    },
+    {
+      path:'/Materialdetalle/:id', // se agrega el id porque ingresa desde otra ubicación en props
+      element: <Materialdetalle/>
+    },
+    {
+      path:'/CentrosDeAcopio',
+      element: <CentrosDeAcopio />
+    },
+    {
+      path:'/DetalleCentroAcopio/:id',
+      element: <DetalleCentroAcopio />
+    },
+    {
+      path:'/HistorialMaterial',
+      element: <HistorialMaterial idUsuario={idUsuario}/>
+    }
+  ])
+
   return (
-    <Layout>
+    <Layout setIdUsuario={setIdUsuario}>
       <RouterProvider router={router} />
     </Layout>
   )

@@ -16,10 +16,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import UsuarioService from "../../services/UsuarioService";
 import InfoIcon from '@mui/icons-material/Info';
+import PropTypes from "prop-types";
 
-//const historial = ["Historal Cupones", "Cupones", "Historial", "Cerrar sesión"];
+Header.propTypes = { setIdUsuario: PropTypes.func.isRequired };
 
-function Header() {
+function Header({ setIdUsuario }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElMantenimiento, setAnchorElMantenimiento] =
@@ -66,8 +67,6 @@ function Header() {
         setAnchorElReporte(null);
     };
 
-
-
     //Resultado de consumo del API, respuesta
     const [data, setData] = useState(null);
     //Error del API
@@ -82,6 +81,7 @@ function Header() {
                 setData(response.data.results)
                 setError(response.error)
                 setLoaded(true)
+                setIdUsuario(response.data.results[0].id);
             })
             .catch(
                 error => {
@@ -93,7 +93,8 @@ function Header() {
                     }
                 }
             )
-    }, [])
+    }, [setIdUsuario]);
+
     if (!loaded) return <InfoIcon />
     if (error) return <p>Error: {error.message}</p>
 
@@ -291,12 +292,12 @@ function Header() {
                             onClose={handleCloseUserMenu}
                         >
                             {/* aquí cambia la vara */}
-                            <MenuItem key="Historial" href="/HistorialMaterial/">
+                            <MenuItem key="Historial" href="/HistorialMaterial/" component="a">
                                 <Typography textAlign="center" >Historial</Typography>
                             </MenuItem>
                         </Menu>
                     </Box>
-                            {/**hola es para el  */}
+                    {/**hola es para el  */}
                     <Menu
                         sx={{ mt: "45px" }}
                         id="menu-appbar-procesos"
