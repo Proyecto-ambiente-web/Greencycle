@@ -1,11 +1,13 @@
 .margindeded {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .textoIzquierda {
     margin-bottom: 4% !important;
     padding-left: 5%;
-
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .ImagenMaterial {

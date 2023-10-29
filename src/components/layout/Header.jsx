@@ -292,7 +292,7 @@ function Header({ setIdUsuario }) {
                             onClose={handleCloseUserMenu}
                         >
                             {/* aquí cambia la vara */}
-                            <MenuItem key="Historial" href="/HistorialMaterial/" component="a">
+                            <MenuItem key="Historial" href="/Historial/" component="a">
                                 <Typography textAlign="center" >Historial</Typography>
                             </MenuItem>
                         </Menu>

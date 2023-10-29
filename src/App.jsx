@@ -10,9 +10,13 @@ import { Materialdetalle } from './components/manteMaterial/detalle';//hijo
 //import { PageNotFound } from './components/layout/Home/PageNotFound';
 import { CentrosDeAcopio } from './components/centroAcopio/centroAcopio';
 import { DetalleCentroAcopio } from './components/centroAcopio/detalleCentroAcopio';
+import { Historial } from './components/Historial/historial';
 import { HistorialMaterial } from './components/Historial/historialMaterial';
 import { useState } from 'react';
 import { Grid } from '@mui/material';
+import CuponImagen from "../src/assets/images/cupones.avif";
+import material from "../src/assets/images/historialMateriales.avif";
+
 
 {/*se necesita el mismo nombre de la función para el import */ }
 
@@ -45,14 +49,19 @@ export default function App() {
       element: <DetalleCentroAcopio />
     },
     {
-      path: '/HistorialMaterial',
+      path: '/Historial',
       element: (
-          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} style={{ display: "flex" }} spacing={3}>
-            <HistorialMaterial idUsuario={idUsuario} />
-            <HistorialMaterial idUsuario={idUsuario} />
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} style={{ display: "flex", justifyContent: "end" }} spacing={3}>
+            <Historial  imagen={material}/>
+            <Historial  imagen={CuponImagen}/>
           </Grid>
       ),
-    }
+    },
+    {
+      path: '/HistorialMaterial',
+      element: <HistorialMaterial idUsuario={idUsuario} />
+    },
+
   ])
 
   return (
