@@ -7,7 +7,7 @@ class HistorialCanjeosServices {
         return axios.get(BASE_URL);
     }
 
-    getHistorialCanjeoById(idUsuario) {
+    getHistorialCanjeoByIdUsuario(idUsuario) {
         return axios.get(BASE_URL + '/' + idUsuario)
     }
 }

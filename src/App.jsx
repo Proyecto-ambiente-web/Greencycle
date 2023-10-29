@@ -12,6 +12,8 @@ import { CentrosDeAcopio } from './components/centroAcopio/centroAcopio';
 import { DetalleCentroAcopio } from './components/centroAcopio/detalleCentroAcopio';
 import { Historial } from './components/Historial/historial';
 import { HistorialMaterial } from './components/Historial/historialMaterial';
+import { DetalleHistorialMaterial } from './components/Historial/detalleHistorialMaterial';
+
 import { useState } from 'react';
 import { Grid } from '@mui/material';
 import CuponImagen from "../src/assets/images/cupones.avif";
@@ -60,6 +62,10 @@ export default function App() {
     {
       path: '/HistorialMaterial',
       element: <HistorialMaterial idUsuario={idUsuario} />
+    },
+    {
+      path: '/DetalleHistorialMaterial',
+      element: <DetalleHistorialMaterial />
     },
 
   ])
