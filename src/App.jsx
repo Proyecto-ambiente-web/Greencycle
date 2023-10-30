@@ -13,7 +13,6 @@ import { DetalleCentroAcopio } from './components/centroAcopio/detalleCentroAcop
 import { Historial } from './components/Historial/historial';
 import { HistorialMaterial } from './components/Historial/historialMaterial';
 import { DetalleHistorialMaterial } from './components/Historial/detalleHistorialMaterial';
-
 import { useState } from 'react';
 import { Grid } from '@mui/material';
 import CuponImagen from "../src/assets/images/cupones.avif";
@@ -64,7 +63,7 @@ export default function App() {
       element: <HistorialMaterial idUsuario={idUsuario} />
     },
     {
-      path: '/DetalleHistorialMaterial',
+      path: '/DetalleHistorialMaterial/:id',
       element: <DetalleHistorialMaterial />
     },
 

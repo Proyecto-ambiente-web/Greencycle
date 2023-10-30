@@ -99,7 +99,7 @@ export function HistorialMaterial({ idUsuario }) {
                                 backgroundColor: (theme) => theme.palette.action.focus,
                                 color: (theme) => theme.palette.common.white
                             }} >
-                            <IconButton component={Link} to={`/DetalleHistorialMaterial/${idUsuario}`} aria-label='Detalle' sx={{ ml: 'auto', width: '100%' }} >
+                            <IconButton component={Link} to={`/DetalleHistorialMaterial/${item.id}`} aria-label='Detalle' sx={{ ml: 'auto', width: '100%' }} >
                                 <Info className="margindeded" />
                                 Detalles
                             </IconButton>

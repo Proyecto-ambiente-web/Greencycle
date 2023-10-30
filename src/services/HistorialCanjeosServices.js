@@ -10,5 +10,9 @@ class HistorialCanjeosServices {
     getHistorialCanjeoByIdUsuario(idUsuario) {
         return axios.get(BASE_URL + '/' + idUsuario)
     }
+
+    getHistorialCanjeoDetalleByIdCanjeo(idCanjeo) {
+        return axios.get(BASE_URL + '/getdetalle/' + idCanjeo)
+    }
 }
 export default new HistorialCanjeosServices();

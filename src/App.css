@@ -1,3 +1,8 @@
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 .margindeded {
     margin-right: 5px;
 }
@@ -17,8 +22,37 @@
     border-radius: 15px;
 }
 
-.container{
+.container {
     width: 100%;
     height: auto;
-    box-sizing: border-box;
+}
+
+.headerFactura {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.containerFactura {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerFactura div {
+    width: auto;
+    height: auto;
+    display: grid;
+    place-content: center;
+}
+
+.total-facturado {
+    width: 80%;
+    height: auto;
+    display: flex;
+    justify-content: right;
+    align-items: start;
 }
