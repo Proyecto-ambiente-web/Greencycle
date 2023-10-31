@@ -11,8 +11,10 @@ import informeImagen from "../../../assets/images/informe.png";
 import SavingsIcon from '@mui/icons-material/Savings';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import HomeIcon from '@mui/icons-material/Home';
-HistorialCanjeosAcopio.propTypes = { idUsuario: PropTypes.string.isRequired };
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import KeyIcon from '@mui/icons-material/Key';
 
+HistorialCanjeosAcopio.propTypes = { idUsuario: PropTypes.string.isRequired };
 
 export function HistorialCanjeosAcopio({ idUsuario }) {
     const [data, setData] = useState(null);
@@ -23,7 +25,7 @@ export function HistorialCanjeosAcopio({ idUsuario }) {
 
     useEffect(() => {
         //Lista de peliculas del API
-        HistorialCanjeosServices.getHistorialMaterialAcopio(idUsuario)
+        HistorialCanjeosServices.getHistorialCanjeoXCentroAcopio(idUsuario)
             .then(response => {
 
                 setData(response.data.results)
@@ -72,8 +74,8 @@ export function HistorialCanjeosAcopio({ idUsuario }) {
                             }}
 
                             style={{ textAlign: 'center' }}
-                            title={"Historial de Canjes de Materiales"}
-                            subheader={`Del centro: ${item.Nombre}`}
+                            title={"Historial de Canjes en el Centro de acopio"}
+                            subheader={`Administrador: ${item.nombreAdmin}`}
                         />
                         <CardContent
                             style={{ textAlign: 'left' }}
@@ -87,10 +89,13 @@ export function HistorialCanjeosAcopio({ idUsuario }) {
                                 <DateRangeIcon /> {item.Fecha}
                             </Typography>
                             <Typography variant='body2' color='text.secondary' className="textoIzquierda">
-                                <HomeIcon />   Nombre:  {item.nombreAcopio}
+                                <AccountCircleIcon />   Nombre del cliente:  {item.NombreCliente}
                             </Typography>
                             <Typography variant='body2' color='text.secondary' className="textoIzquierda">
-                                <HomeIcon />   Codigo del centro:  {item.idCentroAcopio}
+                                <HomeIcon />   Nombre del centro:  {item.nombre}
+                            </Typography>
+                            <Typography variant='body2' color='text.secondary' className="textoIzquierda">
+                                <KeyIcon />   Código del centro:  {item.idCentroAcopio}
                             </Typography>
                             <Typography variant='body2' color='text.secondary' className="textoIzquierda">
                                 <SavingsIcon />   EcoMonedas: {item.TotalEcoMoneda}

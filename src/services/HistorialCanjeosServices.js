@@ -15,7 +15,7 @@ class HistorialCanjeosServices {
         return axios.get(BASE_URL + '/getdetalle/' + idCanjeo)
     }
 
-    getHistorialMaterialAcopio(idCentroAcopio) {
+    getHistorialCanjeoXCentroAcopio(idCentroAcopio) {
         return axios.get(BASE_URL + '/getHistorialMaterialAcopio/' + idCentroAcopio)
     }
 }
