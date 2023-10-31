@@ -8,7 +8,10 @@ import { Link } from "react-router-dom";
 import { Info } from "@mui/icons-material";
 
 Historial.propTypes = { imagen: PropTypes.string.isRequired };
-export function Historial({imagen }) {
+Historial.propTypes = { url: PropTypes.string.isRequired };
+Historial.propTypes = { titulo: PropTypes.string.isRequired };
+
+export function Historial({imagen, url, titulo}) {
 
     return (
         <Grid container sx={{ p: 2, display: "flex", justifyContent: "center", width: "100%" }} spacing={3} >
@@ -27,7 +30,7 @@ export function Historial({imagen }) {
                             },
                         }}
                         style={{ textAlign: 'center' }}
-                        title={"Historial de Canjes de Materiales"}
+                        title={titulo}
                     />
                     <CardContent >
                         <div
@@ -42,7 +45,7 @@ export function Historial({imagen }) {
                             backgroundColor: (theme) => theme.palette.action.focus,
                             color: (theme) => theme.palette.common.white
                         }} >
-                        <IconButton component={Link} to={`/HistorialMaterial/`} aria-label='Detalle' sx={{ ml: 'auto', width: '100%' }} >
+                        <IconButton component={Link} to={url} aria-label='Detalle' sx={{ ml: 'auto', width: '100%' }} >
                             <Info className="margindeded" />
                             Detalles
                         </IconButton>

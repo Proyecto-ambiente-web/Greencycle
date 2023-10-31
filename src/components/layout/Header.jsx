@@ -19,8 +19,9 @@ import InfoIcon from '@mui/icons-material/Info';
 import PropTypes from "prop-types";
 
 Header.propTypes = { setIdUsuario: PropTypes.func.isRequired };
+Header.propTypes = { setidTipoUsuario: PropTypes.number.isRequired };
 
-function Header({ setIdUsuario }) {
+function Header({ setIdUsuario, setidTipoUsuario}) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElMantenimiento, setAnchorElMantenimiento] =
@@ -82,6 +83,8 @@ function Header({ setIdUsuario }) {
                 setError(response.error)
                 setLoaded(true)
                 setIdUsuario(response.data.results[0].id);
+                setidTipoUsuario(response.data.results[0].idTipoUsuario);
+                console.log(setIdUsuario)
             })
             .catch(
                 error => {
@@ -93,7 +96,7 @@ function Header({ setIdUsuario }) {
                     }
                 }
             )
-    }, [setIdUsuario]);
+    }, [setIdUsuario, setidTipoUsuario]);
 
     if (!loaded) return <InfoIcon />
     if (error) return <p>Error: {error.message}</p>

@@ -1,4 +1,4 @@
-import HistorialCanjeosServices from "../../services/HistorialCanjeosServices";
+import HistorialCanjeosServices from "../../../services/HistorialCanjeosServices";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { useEffect } from "react";
@@ -7,14 +7,14 @@ import PropTypes from "prop-types";
 import { Card, CardActions, CardContent, CardHeader, Grid, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Info } from "@mui/icons-material";
-import informeImagen from "../../assets/images/informe.png";
+import informeImagen from "../../../assets/images/informe.png";
 import SavingsIcon from '@mui/icons-material/Savings';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import HomeIcon from '@mui/icons-material/Home';
-HistorialMaterial.propTypes = { idUsuario: PropTypes.string.isRequired };
+HistorialCanjeosAcopio.propTypes = { idUsuario: PropTypes.string.isRequired };
 
 
-export function HistorialMaterial({ idUsuario }) {
+export function HistorialCanjeosAcopio({ idUsuario }) {
     const [data, setData] = useState(null);
     //Error del API
     const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export function HistorialMaterial({ idUsuario }) {
 
     useEffect(() => {
         //Lista de peliculas del API
-        HistorialCanjeosServices.getHistorialCanjeoByIdUsuario(idUsuario)
+        HistorialCanjeosServices.getHistorialMaterialAcopio(idUsuario)
             .then(response => {
 
                 setData(response.data.results)
@@ -73,7 +73,7 @@ export function HistorialMaterial({ idUsuario }) {
 
                             style={{ textAlign: 'center' }}
                             title={"Historial de Canjes de Materiales"}
-                            subheader={`Del usuario: ${item.Nombre}`}
+                            subheader={`Del centro: ${item.Nombre}`}
                         />
                         <CardContent
                             style={{ textAlign: 'left' }}

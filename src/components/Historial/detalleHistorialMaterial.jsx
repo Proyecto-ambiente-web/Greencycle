@@ -50,44 +50,50 @@ export function DetalleHistorialMaterial() {
 
     return (
         <>
+
+
             <section className="headerFactura">
-                <div>
-                    <h1>FACTURA</h1>
+                <div style={{ textAlign: 'left' }}>
+                    <h1>Cetro de acopio: </h1>
+                    <p>{data.centroAcopio.nombre}</p>
+
+                    <h2>FACTURA</h2>
                     <p>N<sup>o</sup> Factura: {data.id}</p>
                     <p>Fecha: {data.Fecha}</p>
                 </div>
-                <div>
+                <div style={{ textAlign: 'right'}}>
+                    <h1>Ubicado en:</h1>
+                    <p>{`${data.provincia}, ${data.canton}`}</p>
+                    <p>{`${data.centroAcopio.direccion}`}</p>
+                    
                     <h2>Facturado a:</h2>
                     <p>{data.usuario.NombreCompleto}</p>
                 </div>
             </section>
-
             <section className="containerFactura">
                 <div>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 900 }} aria-label="simple table">
+                        <Table sx={{ minWidth: 928, border: "solid 2px" }} aria-label="simple table">
                             <TableHead>
                                 <TableRow sx={{ backgroundColor: 'primary.main' }}>
-                                    <TableCell sx={{ color: 'primary.contrastText' }}>Producto</TableCell>
-                                    <TableCell sx={{ color: 'primary.contrastText' }} align="center">Precio unitario</TableCell>
-                                    <TableCell sx={{ color: 'primary.contrastText' }} align="center">Cantidad</TableCell>
-                                    <TableCell sx={{ color: 'primary.contrastText' }} align="right">SubTotal</TableCell>
+                                    <TableCell sx={{ color: 'primary.contrastText'}}>Producto</TableCell>
+                                    <TableCell sx={{ color: 'primary.contrastText'}} align="center">Precio unitario</TableCell>
+                                    <TableCell sx={{ color: 'primary.contrastText'}} align="center">Cantidad</TableCell>
+                                    <TableCell sx={{ color: 'primary.contrastText'}} align="right">SubTotal</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {data && data.materialesCanjeados.map((item) => (
                                     total += parseInt(item.subTotal),
                                     <TableRow
-                                        key={item.id}  //id
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        key={item.id}  
                                     >
-                                        <TableCell component="th" scope="row">
+                                        <TableCell component="th" scope="row" sx={{borderRight: "solid 2px" }}>
                                             {item.descripcion}
                                         </TableCell>
-                                        <TableCell align="center">{item.precio}</TableCell>
-                                        <TableCell align="center">{item.cantidad}</TableCell>
-                                        <TableCell align="right">{item.subTotal}</TableCell>
-
+                                        <TableCell align="center" sx={{borderRight: "solid 2px" }}>{item.precio}</TableCell>
+                                        <TableCell align="center"sx={{borderRight: "solid 2px" }}>{item.cantidad}</TableCell>
+                                        <TableCell align="right"sx={{borderRight: "solid 2px" }}>{item.subTotal}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

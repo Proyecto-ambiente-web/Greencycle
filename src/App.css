@@ -3,6 +3,11 @@
     box-sizing: border-box;
 }
 
+* {
+    padding: 0;
+    margin: 0;
+}
+
 .margindeded {
     margin-right: 5px;
 }
@@ -32,6 +37,16 @@
     height: auto;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 2%;
+}
+
+.headerFactura div{
+    align-items: center;
+}
+
+
+.headerFactura div h2{
+    margin-top: 10% !important;
 }
 
 .containerFactura {
@@ -42,17 +57,11 @@
     align-items: center;
 }
 
-.containerFactura div {
-    width: auto;
-    height: auto;
-    display: grid;
-    place-content: center;
-}
-
 .total-facturado {
-    width: 80%;
+    width: 82%;
     height: auto;
     display: flex;
     justify-content: right;
     align-items: start;
+    margin-top: 10px;
 }
