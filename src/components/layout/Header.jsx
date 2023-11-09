@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 Header.propTypes = { setIdUsuario: PropTypes.func.isRequired };
 Header.propTypes = { setidTipoUsuario: PropTypes.number.isRequired };
 
-function Header({ setIdUsuario, setidTipoUsuario}) {
+function Header({ setIdUsuario, setidTipoUsuario }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElMantenimiento, setAnchorElMantenimiento] =
@@ -318,7 +318,7 @@ function Header({ setIdUsuario, setidTipoUsuario}) {
                         onClose={handleCloseProcesosMenu}
                     >
                         <MenuItem component="a"
-                            href="/mantenimientoMaterial/"
+                            href="/Material/"
                             onClick={handleCloseProcesosMenu}>
                             <Typography textAlign="center">Materiales</Typography>
                         </MenuItem>
@@ -331,7 +331,7 @@ function Header({ setIdUsuario, setidTipoUsuario}) {
                             <Typography textAlign="center">Proceso 3</Typography>
                         </MenuItem>
                     </Menu>
-
+                        {/**parte de los mantenimientos */}
                     <Menu
                         sx={{ mt: "45px" }}
                         id="menu-appbar-mantenimiento"
@@ -349,7 +349,9 @@ function Header({ setIdUsuario, setidTipoUsuario}) {
                         onClose={handleCloseMantenimientoMenu}
                     >
                         <MenuItem
-
+                            component="a"
+                            href="/MantenimientoMaterial/"
+                            onClick={handleCloseProcesosMenu}
                         >
                             <Typography textAlign="center">Materiales</Typography>
                         </MenuItem>

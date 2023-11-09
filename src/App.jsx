@@ -5,8 +5,8 @@ import {
   RouterProvider
 } from 'react-router-dom';
 import { Home } from './components/layout/Home/home';
-import { ListMateriales } from './components/manteMaterial/MantenimientoMaterial';
-import { Materialdetalle } from './components/manteMaterial/detalle';
+import { ListMateriales } from './components/Material/Material';
+import { Materialdetalle } from './components/Material/detalle';
 //import { PageNotFound } from './components/layout/Home/PageNotFound';
 import { CentrosDeAcopio } from './components/centroAcopio/centroAcopio';
 import { DetalleCentroAcopio } from './components/centroAcopio/detalleCentroAcopio';
@@ -19,6 +19,8 @@ import { Grid } from '@mui/material';
 import CuponImagen from "../src/assets/images/cupones.avif";
 import material from "../src/assets/images/historialMateriales.avif";
 import centroAcopio from "../src/assets/images/centroAcopioCanjeos.png";
+import  MantenimientoMaterial from './components/Mantenimiento/MantenmientoMaterial/TableMaterial';
+import {UpdateMaterial} from './components/Mantenimiento/MantenmientoMaterial/UpdateMaterial';
 
 
 export default function App() {
@@ -35,7 +37,7 @@ export default function App() {
        element: <PageNotFound />
      }, */
     {
-      path: '/mantenimientoMaterial',
+      path: '/Material',
       element: <ListMateriales />
     },
     {
@@ -77,7 +79,16 @@ export default function App() {
     {
       path: '/HistorialCanjeosAcopio',
       element: <HistorialCanjeosAcopio idUsuario={idUsuario} />
-    }
+    },
+    {
+      path: '/MantenimientoMaterial',
+      element: <MantenimientoMaterial/>
+    },
+    {
+      path: '/UpdateMaterial/:id',
+      element: <UpdateMaterial/>
+    },
+
   ])
 
   return (
