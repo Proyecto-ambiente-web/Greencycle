@@ -71,10 +71,10 @@ const headCells = [
     label: 'Material',
   },
   {
-    id: 'material',
+    id: 'descripcion',
     numeric: false,
     disablePadding: false,
-    label: 'Tipo Material',
+    label: 'Descripción',
   },
   {
     id: 'precio',
@@ -112,7 +112,7 @@ function TableMaterialHead(props) {
         <TableCell>
           
           <Tooltip title='Crear'>
-            <IconButton component={Link } to='/movie/crear/'> {/* Crear material*/}
+            <IconButton component={Link } to='/CreateMaterial'> {/* Crear material*/}
               <AddIcon/>
             </IconButton>
           </Tooltip>
@@ -356,7 +356,7 @@ export default function TableMaterial() {
                           >
                             {row.Nombre}
                           </TableCell>
-                          <TableCell align='left'>{row.material}</TableCell>
+                          <TableCell align='left'>{row.descripcion}</TableCell>
                           <TableCell align='left'>{row.precio}</TableCell>
                         </TableRow>
                       );

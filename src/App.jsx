@@ -21,6 +21,7 @@ import material from "../src/assets/images/historialMateriales.avif";
 import centroAcopio from "../src/assets/images/centroAcopioCanjeos.png";
 import  MantenimientoMaterial from './components/Mantenimiento/MantenmientoMaterial/TableMaterial';
 import {UpdateMaterial} from './components/Mantenimiento/MantenmientoMaterial/UpdateMaterial';
+import {CreateMaterial} from './components/Mantenimiento/MantenmientoMaterial/CreateMaterial';
 
 
 export default function App() {
@@ -55,7 +56,7 @@ export default function App() {
     {
       path: '/Historial',
       element: (
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} style={{ display: "flex", justifyContent: "end" }} spacing={3}>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={3} style={{ display: "flex", justifyContent: "center" }} spacing={3}>
           {idTipoUsuario == 3 ? (
             <>
               <Historial imagen={material} url={'/HistorialMaterial'} titulo={"Historial de Canjes de Materiales"}/> {/*historial material cliente */}
@@ -88,7 +89,10 @@ export default function App() {
       path: '/UpdateMaterial/:id',
       element: <UpdateMaterial/>
     },
-
+    {
+      path: '/CreateMaterial',
+      element: <CreateMaterial/>
+    }
   ])
 
   return (

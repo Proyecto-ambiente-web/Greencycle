@@ -77,7 +77,7 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
 
     useEffect(() => {
         //Lista de peliculas del API
-        UsuarioService.getUsuarioById(3)
+        UsuarioService.getUsuarioById(2)
             .then(response => {
                 setData(response.data.results)
                 setError(response.error)

@@ -58,7 +58,6 @@ export function UpdateMaterial() {
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {

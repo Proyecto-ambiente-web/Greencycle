@@ -50,8 +50,6 @@ export function DetalleHistorialMaterial() {
 
     return (
         <>
-
-
             <section className="headerFactura">
                 <div style={{ textAlign: 'left' }}>
                     <h1>Cetro de acopio: </h1>

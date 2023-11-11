@@ -3,6 +3,10 @@ const BASE_URL = import.meta.env.VITE_BASE_URL + 'Material';
 
 class MaterialService {
 
+    crearMaterial(Material){
+        return axios.post(BASE_URL, Material);
+    }
+
     getMateriales() {
         return axios.get(BASE_URL);
     }
