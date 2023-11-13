@@ -46,13 +46,13 @@ export function Materialdetalle() {
     return (
         <Grid container sx={{ p: 2, display: "flex", justifyContent: "center" }} spacing={3} >
             {/*se usa map para recorrer los item de la base de datos */}
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={data[0].id}>
+                <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={data.id}>
                     <Card>
                         <CardHeader
                             sx={{
                                 p: 0,
                                 padding: "10px 0p",
-                                backgroundColor: data[0].colorHexa,
+                                backgroundColor: data.colorHexa,
                                 color: (theme) => theme.palette.common.white,
                                 //para cambiar el estilo del subheader 
                                 '& .MuiCardHeader-subheader': {
@@ -61,26 +61,26 @@ export function Materialdetalle() {
                             }}
 
                             style={{ textAlign: 'center' }}
-                            title={data[0].Nombre}
-                            subheader={data[0].TipoMaterial}
+                            title={data.Nombre}
+                            subheader={data.TipoMaterial}
                         />
                         <CardContent >
                             <div
                                 style={{ display: "flex", justifyContent: "center" }}>
-                                <img src={data[0].imagen} alt="imagen del material"
+                                <img src={data.imagen} alt="imagen del material"
                                     style={{ width: "300px", height: "auto", marginBottom: "5%", borderRadius: "15px" }} />
                             </div>
                             <Typography sx={{display:'flex', alignItems:'center', gap:'10px',marginBottom:"10px"}} variant='body2' color='text.secondary'>
-                                <SavingsIcon />   EcoMonedas: {data[0].precio}
+                                <SavingsIcon />   EcoMonedas: {data.precio}
                             </Typography>
                             <Typography sx={{display:'flex', alignItems:'center', gap:'10px',marginBottom:"10px"}} variant='body2' color='text.secondary'>
-                                <DescriptionIcon />   Descripción: {data[0].descripcion}
+                                <DescriptionIcon />   Descripción: {data.descripcion}
                             </Typography>
                             <Typography sx={{display:'flex', alignItems:'center', gap:'10px',marginBottom:"10px"}} variant='body2' color='text.secondary'>
-                                <ColorLensIcon />   Color: {data[0].color}
+                                <ColorLensIcon />   Color: {data.color}
                             </Typography>
                             <Typography sx={{display:'flex', alignItems:'center', gap:'10px'}} variant='body2' color='text.secondary'>
-                                <ScaleIcon /> Unidad de Medida: {data[0].unidadMedida}
+                                <ScaleIcon /> Unidad de Medida: {data.unidadMedida}
                             </Typography>
                         </CardContent>
                     </Card>

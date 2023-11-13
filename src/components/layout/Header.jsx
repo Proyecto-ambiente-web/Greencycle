@@ -331,7 +331,7 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
                             <Typography textAlign="center">Proceso 3</Typography>
                         </MenuItem>
                     </Menu>
-                        {/**parte de los mantenimientos */}
+                    {/**parte de los mantenimientos */}
                     <Menu
                         sx={{ mt: "45px" }}
                         id="menu-appbar-mantenimiento"
@@ -351,12 +351,16 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
                         <MenuItem
                             component="a"
                             href="/MantenimientoMaterial/"
-                            onClick={handleCloseProcesosMenu}
+                            onClick={handleCloseMantenimientoMenu}
                         >
                             <Typography textAlign="center">Materiales</Typography>
                         </MenuItem>
-                        <MenuItem onClick={handleCloseMantenimientoMenu}>
-                            <Typography textAlign="center">Usuarios</Typography>
+                        <MenuItem
+                            component="a"
+                            href="/MantenimientoCentro/"
+                            onClick={handleCloseMantenimientoMenu}
+                        >
+                            <Typography textAlign="center">Centros de Acopio</Typography>
                         </MenuItem>
                         <MenuItem onClick={handleCloseMantenimientoMenu}>
                             <Typography textAlign="center">Centros</Typography>

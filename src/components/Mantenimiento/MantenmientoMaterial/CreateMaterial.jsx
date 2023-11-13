@@ -10,10 +10,33 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import MaterialService from '../../../services/MaterialService';
 import { toast } from 'react-hot-toast';
+import { ChromePicker } from "react-color";
+import { Popover } from "@mui/material";
 //https://www.npmjs.com/package/@hookform/resolvers
 
 export function CreateMaterial() {
     const navigate = useNavigate();
+
+    const [selectedColor, setSelectedColor] = useState("");//variable para el color
+
+    const handleColorChange = (color) => {
+        setSelectedColor(color.hex);
+    };
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleButtonClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        setValue('colorHexa', selectedColor);
+    };
+
+    const open = Boolean(anchorEl);
+
+    const idPicker = open ? "color-picker-popover" : undefined;
 
     // Esquema de validación
     const materialSchema = yup.object({
@@ -33,6 +56,7 @@ export function CreateMaterial() {
     const {
         control,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm({
         defaultValues: {
@@ -63,14 +87,15 @@ export function CreateMaterial() {
                         setError(response.error);
 
                         //Respuesta al usuario de creación
-                        if (response.data.results != null) {
-                            toast.success(response.data.results, {
-                                duration: 4000,
-                                position: 'top-center',
-                            });
-                            // Redireccion a la tabla
-                            return navigate('/MantenimientoMaterial');
-                        }
+                        //if (response.data.results != null) {
+                        toast.success(response.data.results, {
+                            duration: 4000,
+                            position: "top-left",
+                            reverseOrder: 'true'
+                        });
+                        // Redireccion a la tabla
+                        return navigate('/MantenimientoMaterial');
+                        //}
                     })
                     .catch((error) => {
                         if (error instanceof SyntaxError) {
@@ -115,7 +140,7 @@ export function CreateMaterial() {
                             />
                         </FormControl>
                     </Grid>
-                    
+
                     <Grid item xs={12} sm={4}>
                         <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
                             <Controller
@@ -178,11 +203,32 @@ export function CreateMaterial() {
                                         {...field}
                                         id="colorHexa"
                                         label="Color del material en Hexadecimal"
+                                        onClick={handleButtonClick}          
                                         error={Boolean(errors.colorHexa)}
+                                        value={selectedColor}             //agrega el color de la paleta de colores                        
                                         helperText={errors.colorHexa ? errors.colorHexa.message : ' '}
                                     />
                                 )}
                             />
+                            <Popover
+                                id={idPicker}
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                anchorOrigin={{
+                                    vertical: "bottom",
+                                    horizontal: "left",
+                                }}
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "left",
+                                }}
+                            >
+                                <ChromePicker
+                                    color={selectedColor}
+                                    onChange={handleColorChange}
+                                />
+                            </Popover>
                         </FormControl>
                     </Grid>
                     {/* <Grid item xs={12} sm={4}>

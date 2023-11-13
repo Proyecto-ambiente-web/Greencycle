@@ -22,6 +22,8 @@ import centroAcopio from "../src/assets/images/centroAcopioCanjeos.png";
 import  MantenimientoMaterial from './components/Mantenimiento/MantenmientoMaterial/TableMaterial';
 import {UpdateMaterial} from './components/Mantenimiento/MantenmientoMaterial/UpdateMaterial';
 import {CreateMaterial} from './components/Mantenimiento/MantenmientoMaterial/CreateMaterial';
+import MantenimientoCentro from './components/Mantenimiento/MantenimientoCentroAcopio/tablaCentro';
+import {CreateCentro} from './components/Mantenimiento/MantenimientoCentroAcopio/CrearCentro';
 
 
 export default function App() {
@@ -92,7 +94,15 @@ export default function App() {
     {
       path: '/CreateMaterial',
       element: <CreateMaterial/>
-    }
+    },
+    {
+      path: '/MantenimientoCentro',
+      element: <MantenimientoCentro/>
+    },
+    {
+      path: '/CreateCentro',
+      element: <CreateCentro/>
+    },
   ])
 
   return (

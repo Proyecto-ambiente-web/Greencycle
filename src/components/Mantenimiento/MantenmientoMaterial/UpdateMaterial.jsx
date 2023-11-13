@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { useForm, Controller} from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import * as yup from 'yup';
@@ -10,6 +10,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import MaterialService from '../../../services/MaterialService';
+import { Popover } from '@mui/material';
+import { ChromePicker } from "react-color";
 //https://www.npmjs.com/package/@hookform/resolvers
 
 export function UpdateMaterial() {
@@ -21,12 +23,34 @@ export function UpdateMaterial() {
   const [values, setValores] = useState(null);
   //Obtener la material del API
 
+  const [selectedColor, setSelectedColor] = useState("");//variable para el color
+
+  const handleColorChange = (color) => {
+    setSelectedColor(color.hex);
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleButtonClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setValue('colorHexa', selectedColor);
+  };
+
+  const open = Boolean(anchorEl);
+
+  const idPicker = open ? "color-picker-popover" : undefined;
+
   useEffect(() => {
     if (id != undefined && !isNaN(Number(id))) {
       MaterialService.getMaterialById(Number(id))
         .then((response) => {
           console.log(response);
-          setValores(response.data.results[0]);
+          setValores(response.data.results);
+          setSelectedColor(response.data.results.colorHexa);
           setError(response.error);
         })
         .catch((error) => {
@@ -52,12 +76,13 @@ export function UpdateMaterial() {
       .required('El precio es requerido')
       .positive('Solo acepta números positivos'),
     unidadMedida: yup.string().required('La unidad de medida es requerida'),
-    color: yup.string().required('El color es necesario')
+    colorHexa: yup.string().required('El color es necesario')
   });
 
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -66,7 +91,7 @@ export function UpdateMaterial() {
       imagen: '',
       unidadMedida: '',
       precio: '',
-      color: ''
+      colorHexa: ''
     },
     //Valores a precargar en el formulario
     values,
@@ -87,8 +112,7 @@ export function UpdateMaterial() {
         MaterialService.updateMaterial(DataForm)
           .then((response) => {
             console.log(response);
-            setError(response.error);
-         
+            setError(response.error);            
             //Respuesta al usuario de creación
             if (response.data.results != null) {
               toast.success(response.data.results, {
@@ -199,18 +223,39 @@ export function UpdateMaterial() {
           <Grid item xs={12} sm={4}>
             <FormControl variant="standard" fullWidth sx={{ m: 1 }}>
               <Controller
-                name="color"
+                name="colorHexa"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    id="color"
+                    id="colorHexa"
                     label="Color del material"
-                    error={Boolean(errors.color)}
-                    helperText={errors.color ? errors.color.message : ' '}
+                    onClick={handleButtonClick}
+                    error={Boolean(errors.colorHexa)}
+                    value={selectedColor}
+                    helperText={errors.colorHexa ? errors.colorHexa.message : ' '}
                   />
                 )}
               />
+              <Popover
+                id={idPicker}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <ChromePicker
+                  color={selectedColor}
+                  onChange={handleColorChange}
+                />
+              </Popover>
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={12}>
