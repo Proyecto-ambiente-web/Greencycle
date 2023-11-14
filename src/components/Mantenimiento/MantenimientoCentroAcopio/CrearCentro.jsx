@@ -78,30 +78,30 @@ export function CreateCentro() {
         console.log(DataForm);
 
         try {
-            // if (CentroAcopioSchema.isValid()) {
-            //Crear centro
-            CentroAcopioServices.crearCentro(DataForm)
-                .then((response) => {
-                    console.log(response);
-                    setError(response.error);
-                    //Respuesta al usuario de creación
-                    if (response.data.results != null) {
-                        toast.success(response.data.results, {
-                            duration: 4000,
-                            position: 'top-center',
-                        });
-                        // Redireccion a la tabla
-                        return navigate('/MantenimientoCentro');
-                    }
-                })
-                .catch((error) => {
-                    if (error instanceof SyntaxError) {
-                        console.log(error);
-                        setError(error);
-                        throw new Error('Respuesta no válida del servidor');
-                    }
-                });
-            // }
+            if (CentroAcopioSchema.isValid()) {
+                //Crear centro
+                CentroAcopioServices.crearCentro(DataForm)
+                    .then((response) => {
+                        console.log(response);
+                        setError(response.error);
+                        //Respuesta al usuario de creación
+                        //if (response.data.results != null) {
+                            toast.success(response.data.results, {
+                                duration: 4000,
+                                position: 'top-center',
+                            });
+                            // Redireccion a la tabla
+                            return navigate('/MantenimientoCentro');
+                        //}
+                    })
+                    .catch((error) => {
+                        if (error instanceof SyntaxError) {
+                            console.log(error);
+                            setError(error);
+                            throw new Error('Respuesta no válida del servidor');
+                        }
+                    });
+            }
         } catch (e) {
             //Capturar error
         }
