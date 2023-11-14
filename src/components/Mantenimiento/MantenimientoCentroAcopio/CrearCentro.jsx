@@ -29,22 +29,25 @@ export function CreateCentro() {
 
     // Esquema de validación
     const CentroAcopioSchema = yup.object({
-      nombre: yup
-      .string()
-      .required('El nombre del centro es requerido'),
-      direccion: yup
-      .string()
-      .required('La dirección es requerida'),
-      telefono: yup
-      .string()
-      .required('El teléfono es requerido'),
-      horario: yup
-      .string()
-      .required('El horario es requerido'),
-      administrador: yup.array().min(1, 'El administrador es requerido'),
-      Provincia: yup.array().min(1, 'La provincia es requerido'),
-      Canton: yup.array().min(1, 'El cantón es requerido'),
-      materiales: yup.array().min(1, 'El material es requerido'),
+        nombre: yup
+            .string()
+            .required('El nombre del centro es requerido'),
+        direccion: yup
+            .string()
+            .required('La dirección es requerida'),
+        telefono: yup
+            .string()
+            .required('El teléfono es requerido'),
+        horario: yup
+            .string()
+            .required('El horario es requerido'),
+        administrador: yup.mixed()
+            .required("Se requiere un administrador para el centro de acopio"),
+        Provincia: yup.mixed()
+            .required("Se requiere seleccionar una provincia"),
+        Canton: yup.mixed()
+            .required("Se requiere seleccionar un cantón"),
+        materiales: yup.array().min(1, 'Se debe seleccionar mínimo un material'),
     });
 
     const {
@@ -75,30 +78,30 @@ export function CreateCentro() {
         console.log(DataForm);
 
         try {
-            if (CentroAcopioSchema.isValid()) {
-                //Crear centro
-                CentroAcopioServices.CreateCentro(DataForm)
-                    .then((response) => {
-                        console.log(response);
-                        setError(response.error);
-                        //Respuesta al usuario de creación
-                        if (response.data.results != null) {
-                            toast.success(response.data.results, {
-                                duration: 4000,
-                                position: 'top-center',
-                            });
-                            // Redireccion a la tabla
-                            return navigate('/movie-table');
-                        }
-                    })
-                    .catch((error) => {
-                        if (error instanceof SyntaxError) {
-                            console.log(error);
-                            setError(error);
-                            throw new Error('Respuesta no válida del servidor');
-                        }
-                    });
-            }
+            // if (CentroAcopioSchema.isValid()) {
+            //Crear centro
+            CentroAcopioServices.crearCentro(DataForm)
+                .then((response) => {
+                    console.log(response);
+                    setError(response.error);
+                    //Respuesta al usuario de creación
+                    if (response.data.results != null) {
+                        toast.success(response.data.results, {
+                            duration: 4000,
+                            position: 'top-center',
+                        });
+                        // Redireccion a la tabla
+                        return navigate('/MantenimientoCentro');
+                    }
+                })
+                .catch((error) => {
+                    if (error instanceof SyntaxError) {
+                        console.log(error);
+                        setError(error);
+                        throw new Error('Respuesta no válida del servidor');
+                    }
+                });
+            // }
         } catch (e) {
             //Capturar error
         }
@@ -130,22 +133,37 @@ export function CreateCentro() {
     //Lista de canton
     const [dataCanton, setDataCanton] = useState({});
     const [loadedCanton, setLoadedCanton] = useState(false);
+    let [idProvincia, setIdProvincia] = useState(0);
+
+    // Función para cargar cantones por id de provincia
     useEffect(() => {
-        CantonService.getCanton()
-            .then((response) => {
-                console.log(response);
-                setDataCanton(response.data.results);
-                setLoadedCanton(true);
-            })
-            .catch((error) => {
-                if (error instanceof SyntaxError) {
-                    console.log(error);
-                    setError(error);
-                    setLoadedCanton(false);
-                    throw new Error('Respuesta no válida del servidor');
-                }
-            });
-    }, []);
+        if (idProvincia !== null) {
+            CantonService.getCantonByIdProvincia(idProvincia)
+                .then((response) => {
+                    console.log(response);
+                    setDataCanton(response.data.results);
+                    setLoadedCanton(true);
+                })
+                .catch((error) => {
+                    if (error instanceof SyntaxError) {
+                        console.log(error);
+                        setError(error);
+                        setLoadedCanton(false);
+                        throw new Error('Respuesta no válida del servidor');
+                    }
+                });
+        }
+    }, [idProvincia]);
+
+
+    /* useEffect(() => {
+        setIdProvincia(1);
+        console.log('IdProvincia')
+        console.log(idProvincia)
+    },[idProvincia]); */
+
+    // useEffect que se ejecuta cuando cambia el valor de selectedProvince
+
 
 
     //Lista de admins
@@ -281,18 +299,21 @@ export function CreateCentro() {
                                             field={field}
                                             data={dataProvincia}
                                             error={Boolean(errors.Provincia)}
-                                            onChange={(e) =>
-                                                setValue('Provincia', e.target.value, {
+                                            onSelection={(value) => {
+                                                setValue('Provincia', value, {
                                                     shouldValidate: true,
+                                                });
+                                                setIdProvincia(value);
+                                                console.log(value);
+                                            }}
 
-                                                })
-                                                //dentro ded esto se hace una funcion donde se guarde el ussEfect 
-                                                //y despues se deberia llamar aqui con algun evento de click a provincia 
-                                                //para que busque los cantones de esa provincia 
-                                            }
                                         />
+
                                     )}
+
                                 />
+
+
                             )}
                             <FormHelperText sx={{ color: '#d32f2f' }}>
                                 {errors.Provincia ? errors.Provincia.message : ' '}
@@ -307,7 +328,7 @@ export function CreateCentro() {
                                     name='Canton'
                                     control={control}
                                     render={({ field }) => (
-                                        <SelectCanton //esto se cambia 
+                                        <SelectCanton
                                             field={field}
                                             data={dataCanton}
                                             error={Boolean(errors.Canton)}
@@ -315,6 +336,7 @@ export function CreateCentro() {
                                                 setValue('Canton', e.target.value, {
                                                     shouldValidate: true,
                                                 })
+
                                             }
                                         />
                                     )}

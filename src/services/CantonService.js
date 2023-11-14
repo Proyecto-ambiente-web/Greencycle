@@ -6,6 +6,9 @@ class CantonService {
   getCanton() {
     return axios.get(BASE_URL);
   }
+  getCantonByIdProvincia(provincia) {
+    return axios.get(BASE_URL + "/" + "getCantonByIdProvincia" +"/"+ provincia);
+  }
 
 }
 export default new CantonService();
