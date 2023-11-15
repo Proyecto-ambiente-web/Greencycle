@@ -184,7 +184,7 @@ function TableMaterialToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Mantenimiento Material
+          Mantenimiento Centro de Acopio
         </Typography>
       )}
 
