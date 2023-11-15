@@ -6,9 +6,6 @@ import { Card, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import DescriptionIcon from '@mui/icons-material/Description';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
 import ScaleIcon from '@mui/icons-material/Scale';
 import SavingsIcon from '@mui/icons-material/Savings';
 
@@ -76,12 +73,7 @@ export function DetalleCentroAcopio() {
                         <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: "10px" }} variant='body2' color='text.secondary'>
                             <HistoryToggleOffIcon /> Horario: {data.horario}
                         </Typography>
-                        <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: "10px" }} variant='body2' color='text.secondary'>
-                            <LocationOnIcon /> Provincia: {data.Provincia.descripcion}
-                        </Typography>
-                        <Typography sx={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: "10px" }} variant='body2' color='text.secondary'>
-                            <LocationOnIcon /> Canton: {data.Canton.descripcion}
-                        </Typography>
+                        
                     </CardContent>
                 </Card>
                 <Typography variant='h4' style={{marginTop: "5%", textAlign:'center'}}> Materiales del centro de acopio</Typography>
@@ -121,12 +113,6 @@ export function DetalleCentroAcopio() {
                                         </div>
                                         <Typography className="textoIzquierda" variant='body2' color='text.secondary'>
                                             <SavingsIcon />   EcoMonedas: {item.precio}
-                                        </Typography>
-                                        <Typography className="textoIzquierda" variant='body2' color='text.secondary'>
-                                            <DescriptionIcon />   Descripción: {item.descripcion}
-                                        </Typography>
-                                        <Typography className="textoIzquierda" variant='body2' color='text.secondary'>
-                                            <ColorLensIcon />   Color: {item.color}
                                         </Typography>
                                         <Typography className="textoIzquierda" variant='body2' color='text.secondary'>
                                             <ScaleIcon /> Unidad de Medida: {item.unidadMedida}

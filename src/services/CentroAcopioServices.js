@@ -14,5 +14,13 @@ class CentroAcopioService {
     crearCentro(Centro){
         return axios.post(BASE_URL, Centro);
     }
+
+    getCentroFormById(Centro) {
+        return axios.get(BASE_URL + "/getForm/" + Centro);
+      }
+
+    updateCentro(centro){
+        return axios.put(BASE_URL, centro);
+    }
 }
 export default new CentroAcopioService();

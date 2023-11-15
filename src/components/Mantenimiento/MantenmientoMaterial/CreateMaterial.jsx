@@ -64,7 +64,7 @@ export function CreateMaterial() {
             descripcion: '',
             unidadMedida: '',
             precio: '',
-            colorHexa: ''
+            colorHexa: '',
         },
         // Asignación de validaciones
         resolver: yupResolver(materialSchema),
@@ -87,7 +87,7 @@ export function CreateMaterial() {
                         setError(response.error);
 
                         //Respuesta al usuario de creación
-                        //if (response.data.results != null) {
+                        if (response.data.results != null) {
                         toast.success(response.data.results, {
                             duration: 4000,
                             position: "top-left",
@@ -95,7 +95,7 @@ export function CreateMaterial() {
                         });
                         // Redireccion a la tabla
                         return navigate('/MantenimientoMaterial');
-                        //}
+                        }
                     })
                     .catch((error) => {
                         if (error instanceof SyntaxError) {

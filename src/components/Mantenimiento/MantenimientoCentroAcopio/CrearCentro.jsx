@@ -14,7 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import UsuarioService from '../../../services/UsuarioService.js';
 import CantonService from '../../../services/CantonService.js';
-import { toast } from 'react-hot-toast';
+import {toast} from 'react-hot-toast';
 import { SelectProvincia } from './Form/SelectProvincia';
 import { SelectCanton } from './Form/SelectCanton.jsx';
 import CentroAcopioServices from '../../../services/CentroAcopioServices';
@@ -49,6 +49,7 @@ export function CreateCentro() {
             .required("Se requiere seleccionar un cantón"),
         materiales: yup.array().min(1, 'Se debe seleccionar mínimo un material'),
     });
+    
 
     const {
         control,
@@ -89,7 +90,8 @@ export function CreateCentro() {
                             toast.success(response.data.results, {
                                 duration: 4000,
                                 position: 'top-center',
-                            });
+                                style:{ zIndex: 9999 }
+                              });
                             // Redireccion a la tabla
                             return navigate('/MantenimientoCentro');
                         //}
@@ -295,7 +297,7 @@ export function CreateCentro() {
                                     name='Provincia'
                                     control={control}
                                     render={({ field }) => (
-                                        <SelectProvincia //esto se cambia 
+                                        <SelectProvincia 
                                             field={field}
                                             data={dataProvincia}
                                             error={Boolean(errors.Provincia)}

@@ -24,7 +24,6 @@ export function SelectProvincia({ field, data, onSelection   }) {
             {...field}
             labelId='provincia'
             label='provincia'
-            defaultValue=''
             value={field.value}
             onChange={handleChange} // Agregado el evento onChange
           >

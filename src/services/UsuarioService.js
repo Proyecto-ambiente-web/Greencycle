@@ -10,6 +10,10 @@ class UsuarioService {
     getUsuarioById(usuarioId) {
         return axios.get(BASE_URL + '/' + usuarioId)
     }
+
+    getUsuarioDelCentroyLibres(usuarioId) {
+        return axios.get(BASE_URL + '/'+ 'usuarioAdmin' + '/' + usuarioId)
+    }
 }
 
 export default new UsuarioService();

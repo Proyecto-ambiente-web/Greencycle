@@ -24,6 +24,7 @@ import {UpdateMaterial} from './components/Mantenimiento/MantenmientoMaterial/Up
 import {CreateMaterial} from './components/Mantenimiento/MantenmientoMaterial/CreateMaterial';
 import MantenimientoCentro from './components/Mantenimiento/MantenimientoCentroAcopio/tablaCentro';
 import {CreateCentro} from './components/Mantenimiento/MantenimientoCentroAcopio/CrearCentro';
+import {UpdateCentro} from './components/Mantenimiento/MantenimientoCentroAcopio/UpdateCentro';
 
 
 export default function App() {
@@ -102,6 +103,10 @@ export default function App() {
     {
       path: '/CreateCentro',
       element: <CreateCentro/>
+    },
+    {
+      path: '/UpdateCentro/:id',
+      element: <UpdateCentro/>
     },
   ])
 
