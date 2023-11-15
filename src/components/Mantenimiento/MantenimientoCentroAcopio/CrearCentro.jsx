@@ -48,6 +48,7 @@ export function CreateCentro() {
         Canton: yup.mixed()
             .required("Se requiere seleccionar un cantón"),
         materiales: yup.array().min(1, 'Se debe seleccionar mínimo un material'),
+        
     });
     
 
