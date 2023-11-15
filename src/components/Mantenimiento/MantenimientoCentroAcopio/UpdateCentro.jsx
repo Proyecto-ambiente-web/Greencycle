@@ -33,6 +33,10 @@ export function UpdateCentro() {
         if (id != undefined && !isNaN(Number(id))) {
             CentroAcopioServices.getCentroFormById(Number(id))
                 .then((response) => {
+                    setIdProvincia(response.data.results.Provincia)
+                    setValue('Provincia',response.data.results.Provincia)
+                    setValue('Canton',response.data.results.Canton)
+
                     console.log(response);
                     setValores(response.data.results);
                     setError(response.error);
@@ -79,8 +83,8 @@ export function UpdateCentro() {
     } = useForm({
         defaultValues: {
             nombre: '',
-            Provincia: [],
-            Canton: [],
+            Provincia: '',
+            Canton: '',
             direccion: '',
             telefono: '',
             horario: '',

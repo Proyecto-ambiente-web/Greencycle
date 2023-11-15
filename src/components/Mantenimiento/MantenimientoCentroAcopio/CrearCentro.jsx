@@ -91,7 +91,6 @@ export function CreateCentro() {
                             toast.success(response.data.results, {
                                 duration: 4000,
                                 position: 'top-center',
-                                style:{ zIndex: 9999 }
                               });
                             // Redireccion a la tabla
                             return navigate('/MantenimientoCentro');
@@ -290,7 +289,7 @@ export function CreateCentro() {
                             />
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={3}>
                         <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
                             {/* Lista de Provincia */}
                             {loadedProvincia && (
@@ -323,7 +322,7 @@ export function CreateCentro() {
                             </FormHelperText>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={3}>
                         <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
                             {/* Lista de Provincia */}
                             {loadedCanton && (

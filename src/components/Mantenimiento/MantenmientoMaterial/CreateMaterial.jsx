@@ -91,7 +91,6 @@ export function CreateMaterial() {
                         toast.success(response.data.results, {
                             duration: 4000,
                             position: "top-left",
-                            reverseOrder: 'true'
                         });
                         // Redireccion a la tabla
                         return navigate('/MantenimientoMaterial');
