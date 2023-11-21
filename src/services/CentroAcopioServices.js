@@ -22,5 +22,9 @@ class CentroAcopioService {
     updateCentro(centro) {
         return axios.put(BASE_URL, centro);
     }
+
+    getCentroAcopioXAdmin(Centro) {
+        return axios.get(BASE_URL + "/getCentroAcopioXAdmin/" + Centro);
+    }
 }
 export default new CentroAcopioService();

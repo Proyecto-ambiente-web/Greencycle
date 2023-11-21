@@ -14,6 +14,10 @@ class UsuarioService {
     getUsuarioDelCentroyLibres(usuarioId) {
         return axios.get(BASE_URL + '/'+ 'usuarioAdmin' + '/' + usuarioId)
     }
+
+    usuariosClientes(usuarioId) {
+        return axios.get(BASE_URL + '/'+ 'usuarioClientes' + '/' + usuarioId)
+    }
 }
 
 export default new UsuarioService();

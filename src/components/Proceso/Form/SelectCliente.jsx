@@ -3,26 +3,27 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import PropTypes from 'prop-types';
 
-SelectCanton.propTypes = {
+SelectCliente.propTypes = {
   data: PropTypes.array,
   field: PropTypes.object,
 };
-export function SelectCanton({ field, data }) {
+
+export function SelectCliente({ field, data }) {
   return (
     <>
       <>
-      <InputLabel id='canton'>Cantón</InputLabel>
+      <InputLabel id='NombreCompleto'>Cliente</InputLabel>
         <Select
           {...field}
-          labelId='canton'
-          label='canton'
+          labelId='NombreCompleto'
+          label='NombreCompleto'
           defaultValue=''
           value={field.value}
         >
           {data &&
-            data.map((canton) => (
-              <MenuItem key={canton.id} value={canton.id}>
-                {canton.descripcion}
+            data.map((cliente) => (
+              <MenuItem key={cliente.id} value={cliente.id}>
+                {cliente.NombreCompleto}
               </MenuItem> 
             ))}
         </Select>

@@ -112,7 +112,7 @@ export default function App() {
     },
     {
       path: '/CanjeoMateriales',
-      element: <CanjeoMateriales/>
+      element: <CanjeoMateriales idUsuario={idUsuario}/>
     },
   ])
 
