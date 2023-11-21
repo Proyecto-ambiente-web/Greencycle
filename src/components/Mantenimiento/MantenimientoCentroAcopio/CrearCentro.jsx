@@ -27,50 +27,38 @@ import { SelectMateriales } from './Form/SelectMateriales.jsx';
 export function CreateCentro() {
     const navigate = useNavigate();
 
-    // Esquema de validación
     const CentroAcopioSchema = yup.object({
-        nombre: yup
-            .string()
-            .required('El nombre del centro es requerido'),
-        direccion: yup
-            .string()
-            .required('La dirección es requerida'),
-        telefono: yup
-            .string()
-            .required('El teléfono es requerido'),
-        horario: yup
-            .string()
-            .required('El horario es requerido'),
-        administrador: yup.mixed()
-            .required("Se requiere un administrador para el centro de acopio"),
-        Provincia: yup.mixed()
-            .required("Se requiere seleccionar una provincia"),
-        Canton: yup.mixed()
-            .required("Se requiere seleccionar un cantón"),
-        materiales: yup.array().min(1, 'Se debe seleccionar mínimo un material'),
-        
-    });
+        nombre: yup.string().required("El nombre del centro es requerido"),
+        direccion: yup.string().required("La dirección es requerida"),
+        telefono: yup.string().required("El teléfono es requerido"),
+        horario: yup.string().required("El horario es requerido"),
+        administrador: yup
+          .string()
+          .required("Se debe seleccionar una administrador para el centro"),
+        Provincia: yup.string().required("Se debe seleccionar una provincia"),
+        Canton: yup.string().required("Se debe seleccionar un cantón"),
+        materiales: yup.array().min(1, "Se debe seleccionar mínimo un material"),
+      });
     
-
-    const {
+      const {
         control,
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm({
+      } = useForm({
         defaultValues: {
-            nombre: '',
-            Provincia: [],
-            Canton: [],
-            direccion: '',
-            telefono: '',
-            horario: '',
-            administrador: [],
-            materiales: [],
+          nombre: "",
+          Provincia: "",
+          Canton: "",
+          direccion: "",
+          telefono: "",
+          horario: "",
+          administrador: "",
+          materiales: [],
         },
         // Asignación de validaciones
         resolver: yupResolver(CentroAcopioSchema),
-    });
+      });
 
     const [error, setError] = useState('');
 
@@ -156,15 +144,6 @@ export function CreateCentro() {
                 });
         }
     }, [idProvincia]);
-
-
-    /* useEffect(() => {
-        setIdProvincia(1);
-        console.log('IdProvincia')
-        console.log(idProvincia)
-    },[idProvincia]); */
-
-    // useEffect que se ejecuta cuando cambia el valor de selectedProvince
 
 
 

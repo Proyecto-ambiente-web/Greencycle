@@ -11,6 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import { Info } from "@mui/icons-material";
 import "../../App.css"
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export function ListMateriales() {
     //Resultado de consumo del API, respuesta
@@ -39,7 +41,10 @@ export function ListMateriales() {
                 }
             )
     }, [])
-    if (!loaded) return <p>Cargando...</p>
+    if (!loaded) return (
+        <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>)
     if (error) return <p>Error: {error.message}</p>
     return (
         <Grid container sx={{ p: 2, display: "flex", justifyContent: "center" }} spacing={3} >

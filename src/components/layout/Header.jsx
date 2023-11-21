@@ -77,7 +77,7 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
 
     useEffect(() => {
         //Lista de peliculas del API
-        UsuarioService.getUsuarioById(2)
+        UsuarioService.getUsuarioById(5)
             .then(response => {
                 setData(response.data.results)
                 setError(response.error)
@@ -327,8 +327,10 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
                             onClick={handleCloseProcesosMenu}>
                             <Typography textAlign="center">Centros de Acopio</Typography>
                         </MenuItem>
-                        <MenuItem onClick={handleCloseProcesosMenu}>
-                            <Typography textAlign="center">Proceso 3</Typography>
+                        <MenuItem component="a"
+                            href="/CanjeoMateriales/"
+                            onClick={handleCloseProcesosMenu}>
+                            <Typography textAlign="center">Canjeo</Typography>
                         </MenuItem>
                     </Menu>
                     {/**parte de los mantenimientos */}

@@ -8,6 +8,8 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 import ScaleIcon from '@mui/icons-material/Scale';
 import SavingsIcon from '@mui/icons-material/Savings';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export function DetalleCentroAcopio() {
     const params = useParams(); //agregamos esta linea porque ingresa un prop desde la ruta 
@@ -39,7 +41,10 @@ export function DetalleCentroAcopio() {
                 }
             )
     }, [params.id])
-    if (!loaded) return <p>Cargando...</p>
+    if (!loaded) return (
+        <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>)
     if (error) return <p>Error: {error.message}</p>
 
     return (

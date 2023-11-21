@@ -34,8 +34,8 @@ export function UpdateCentro() {
             CentroAcopioServices.getCentroFormById(Number(id))
                 .then((response) => {
                     setIdProvincia(response.data.results.Provincia)
-                    setValue('Provincia',response.data.results.Provincia)
-                    setValue('Canton',response.data.results.Canton)
+                    setValores('Provincia', response.data.results.Provincia)
+                    setValores('Canton', response.data.results.Canton)
 
                     console.log(response);
                     setValores(response.data.results);
@@ -54,7 +54,7 @@ export function UpdateCentro() {
 
     // Esquema de validación
     const CentroAcopioSchema = yup.object({
-        nombre: yup
+     nombre: yup
             .string()
             .required('El nombre del centro es requerido'),
         direccion: yup
@@ -191,6 +191,7 @@ export function UpdateCentro() {
                     console.log(response);
                     setDataCanton(response.data.results);
                     setLoadedCanton(true);
+
                 })
                 .catch((error) => {
                     if (error instanceof SyntaxError) {
@@ -200,22 +201,7 @@ export function UpdateCentro() {
                         throw new Error('Respuesta no válida del servidor');
                     }
                 });
-        }/* else{
-            CantonService.getCanton()
-                .then((response) => {
-                    console.log(response);
-                    setDataCanton(response.data.results);
-                    setLoadedCanton(true);
-                })
-                .catch((error) => {
-                    if (error instanceof SyntaxError) {
-                        console.log(error);
-                        setError(error);
-                        setLoadedCanton(false);
-                        throw new Error('Respuesta no válida del servidor');
-                    }
-                });
-        } */
+        }
     }, [idProvincia]);
 
 
@@ -266,9 +252,6 @@ export function UpdateCentro() {
                 }
             });
     }, []);
-
-
-
 
     if (error) return <p>Error: {error.message}</p>;
     return (
@@ -390,7 +373,7 @@ export function UpdateCentro() {
                     <Grid item xs={12} sm={4}>
                         <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
                             {/* Lista de Provincia */}
-                            {loadedCanton ? (
+                            {loadedCanton && (
                                 <Controller
                                     name='Canton'
                                     control={control}
@@ -398,8 +381,15 @@ export function UpdateCentro() {
                                         <SelectCanton
                                             field={field}
                                             data={dataCanton}
-                                            
+
                                             error={Boolean(errors.Canton)}
+                                            onSelection={(value) => {
+                                                setValue('Canton', value, {
+                                                    shouldValidate: true,
+                                                });
+
+
+                                            }}
                                             onChange={(e) =>
                                                 setValue('Canton', e.target.value, {
                                                     shouldValidate: true,
@@ -408,11 +398,6 @@ export function UpdateCentro() {
                                         />
                                     )}
                                 />
-                            ) : (
-                                <Typography>
-                                    Para escoger canton primero tiene que confirmar la provincia
-                                </Typography>
-
                             )
                             }
                             <FormHelperText sx={{ color: '#d32f2f' }}>

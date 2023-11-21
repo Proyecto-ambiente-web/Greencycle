@@ -25,6 +25,8 @@ import {CreateMaterial} from './components/Mantenimiento/MantenmientoMaterial/Cr
 import MantenimientoCentro from './components/Mantenimiento/MantenimientoCentroAcopio/tablaCentro';
 import {CreateCentro} from './components/Mantenimiento/MantenimientoCentroAcopio/CrearCentro';
 import {UpdateCentro} from './components/Mantenimiento/MantenimientoCentroAcopio/UpdateCentro';
+import {CanjeoMateriales} from './components/Proceso/canjeoMateriales/canjeoMateriales';
+
 
 
 export default function App() {
@@ -107,6 +109,10 @@ export default function App() {
     {
       path: '/UpdateCentro/:id',
       element: <UpdateCentro/>
+    },
+    {
+      path: '/CanjeoMateriales',
+      element: <CanjeoMateriales/>
     },
   ])
 

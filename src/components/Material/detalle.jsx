@@ -11,6 +11,8 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import ScaleIcon from '@mui/icons-material/Scale';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export function Materialdetalle() {
     const { id } = useParams(); //agregamos esta linea porque ingresa un prop desde la ruta 
@@ -18,7 +20,7 @@ export function Materialdetalle() {
     //Resultado de consumo del API, respuesta
     const [data, setData] = useState(null);
     //Error del API
-    const [error, setError] = useState("");
+    const [error, setError] = useState(""); 
     //Booleano para establecer sí se ha recibido respuesta
     const [loaded, setLoaded] = useState(false);
 
@@ -41,7 +43,10 @@ export function Materialdetalle() {
                 }
             )
     }, [id]); // Añade 'children' como dependencia 
-    if (!loaded) return <p>Cargando...</p> 
+    if (!loaded)  return (
+        <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>)
     if (error) return <p>Error: {error.message}</p>
     return (
         <Grid container sx={{ p: 2, display: "flex", justifyContent: "center" }} spacing={3} >
