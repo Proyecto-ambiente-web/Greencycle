@@ -85,6 +85,27 @@ export function CanjeoMateriales({ idUsuario }) {
             });
     }, []);
 
+    //cliente seleccionado
+    let [idCliente, setIdCliente] = useState(null);
+
+    const [dataCliente, setdataCliente] = useState({});
+    // const [loadedCliente, setLoadedCliente] = useState(false);
+    useEffect(() => {
+        UsuarioService.getUsuarioById(idCliente)
+            .then((response) => {
+                console.log(response);
+                setdataCliente(response.data.results);
+                //setLoadedCliente(true);
+            })
+            .catch((error) => {
+                if (error instanceof SyntaxError) {
+                    console.log(error);
+                    setError(error);
+                    //  setLoadedCliente(false);
+                    throw new Error('Respuesta no válida del servidor');
+                }
+            });
+    }, [idCliente]);
 
     if (!loaded) return (
         <Box sx={{ width: '100%' }}>
@@ -92,13 +113,11 @@ export function CanjeoMateriales({ idUsuario }) {
         </Box>)
     if (error) return <p>Error: {error.message}</p>
 
+
+
     return (
         <>
-
-
             <section className="containerCanjeo">
-
-
                 <section className="infoCange">
                     <div style={{ textAlign: 'left' }}>
                         <h1>Canjeo de materiales</h1>
@@ -110,45 +129,52 @@ export function CanjeoMateriales({ idUsuario }) {
 
                     </div>
 
+                <div style={{width:'200px'}}>
                     <div style={{ textAlign: 'right' }}>
-                        <h1>Facturado a:</h1>
-                        <p style={{ textAlign: 'left' }}>Nombre { }</p>
-                        <p style={{ textAlign: 'left' }}>Correo { }</p>
-                        <p style={{ textAlign: 'left' }}>identificación { }</p>
+                        <h1 style={{ textAlign: 'left' }}>Facturado a:</h1>
+                        <p style={{ textAlign: 'left' }}>Nombre: {dataCliente.NombreCompleto}</p>
+                        <p style={{ textAlign: 'left' }}>Correo: {dataCliente.Correo}</p>
+                        <p style={{ textAlign: 'left' }}>identificación: {dataCliente.id}</p>
+                    </div>
 
-                        <br />
-                        <form onSubmit={handleSubmit(onsubmit, onError)} noValidate>
-                           
-                            <Grid item xs={12} sm={2} style={{ width: '300px' }}>
-                                <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-                                    {loadedClientes && (
-                                        <Controller
-                                            name='NombreCompleto'
-                                            control={control}
-                                            render={({ field }) => (
-                                                <SelectCliente
-                                                    field={field}
-                                                    data={dataClientes}
-                                                    error={Boolean(errors.NombreCompleto)}
-                                                    onChange={(e) => {
-                                                        setValue('NombreCompleto', e.target.value, {
-                                                            shouldValidate: true,
-                                                        })
+                    <form onSubmit={handleSubmit(onsubmit, onError)} noValidate>
+                        <Grid item xs={12} sm={2} style={{ width: '80%' }}>
+                            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+                                {loadedClientes && (
+                                    <Controller
+                                        name='NombreCompleto'
+                                        control={control}
+                                        render={({ field }) => (
+                                            <SelectCliente
+                                                field={field}
+                                                data={dataClientes}
+                                                error={Boolean(errors.NombreCompleto)}
+                                                onSelection={(value) => {
+                                                    setValue('NombreCompleto', value, {
+                                                        shouldValidate: true,
+                                                    });
+                                                    setIdCliente(value);
+                                                    console.log(value)
 
-                                                    }}
-                                                />
-                                            )}
-                                        />
-                                    )}
-                                    <FormHelperText sx={{ color: '#d32f2f' }}>
-                                        {errors.cliente ? errors.cliente.message : ' '}
-                                    </FormHelperText>
-                                </FormControl>
-                            </Grid>
-                        </form>
+                                                }}
+                                                onChange={(e) => {
+                                                    setValue('NombreCompleto', e.target.value, {
+                                                        shouldValidate: true,
+                                                    })
+                                                    setIdCliente(e.target.value);
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                )}
+                                <FormHelperText sx={{ color: '#d32f2f' }}>
+                                    {errors.cliente ? errors.cliente.message : ' '}
+                                </FormHelperText>
+                            </FormControl>
+                        </Grid>
+                    </form>
                     </div>
                 </section>
-
             </section>
         </>
     )

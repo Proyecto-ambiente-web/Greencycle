@@ -82,8 +82,8 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
                 setData(response.data.results)
                 setError(response.error)
                 setLoaded(true)
-                setIdUsuario(response.data.results[0].id);
-                setidTipoUsuario(response.data.results[0].idTipoUsuario);
+                setIdUsuario(response.data.results.id);
+                setidTipoUsuario(response.data.results.idTipoUsuario);
                 console.log(setIdUsuario)
             })
             .catch(
@@ -273,7 +273,7 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title={data[0].NombreCompleto}>
+                        <Tooltip title={data.NombreCompleto}>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Usuario" src="" />
                             </IconButton>

@@ -12,6 +12,7 @@ import { toast } from 'react-hot-toast';
 import MaterialService from '../../../services/MaterialService';
 import { Popover } from '@mui/material';
 import { ChromePicker } from "react-color";
+import { Box, LinearProgress } from "@mui/material";
 //https://www.npmjs.com/package/@hookform/resolvers
 
 export function UpdateMaterial() {
@@ -101,36 +102,79 @@ export function UpdateMaterial() {
 
   const [error, setError] = useState('');
 
+  //Lista de materiales
+  const [dataMateriales, setDataMateriales] = useState({});
+  const [loadedMateriales, setLoadedMateriales] = useState(false);
+  useEffect(() => {
+    MaterialService.getMateriales()
+      .then((response) => {
+        console.log(response);
+        setDataMateriales(response.data.results);
+        setLoadedMateriales(true);
+      })
+      .catch((error) => {
+        if (error instanceof SyntaxError) {
+          console.log(error);
+          setError(error);
+          setLoadedMateriales(false);
+          throw new Error('Respuesta no válida del servidor');
+        }
+      });
+  }, []);
+
+  if (!loadedMateriales) return (
+    <Box sx={{ width: '100%' }}>
+      <LinearProgress />
+    </Box>)
+  if (error) return <p>Error: {error.message}</p>
+
   //Accion submit
   const onSubmit = (DataForm) => {
     console.log('Formulario:');
     console.log(DataForm);
+    let bandera = true;
 
     try {
-      if (materialSchema.isValid()) {
-        //Crear material
-        MaterialService.updateMaterial(DataForm)
-          .then((response) => {
-            console.log(response);
-            setError(response.error);            
-            //Respuesta al usuario de creación
-            if (response.data.results != null) {
-              toast.success(response.data.results, {
-                duration: 4000,
-                position: 'top-center',
-              });
+      {
+        dataMateriales && dataMateriales.map((item) => {
+          if (item.colorHexa == DataForm.colorHexa && item.id != DataForm.id) {
+            toast.error('Este color ya ha sido seleccionado', {
+              duration: 4000,
+              position: "top-center",
+            });
 
-              // Redireccion a la tabla
-              return navigate('/MantenimientoMaterial');
-            }
-          })
-          .catch((error) => {
-            if (error instanceof SyntaxError) {
-              console.log(error);
-              setError(error);
-              throw new Error('Respuesta no válida del servidor');
-            }
-          });
+            bandera = false;
+            return;
+          }
+        })
+      }
+
+      if (bandera) {
+        if (materialSchema.isValid()) {
+          //Crear material
+          MaterialService.updateMaterial(DataForm)
+            .then((response) => {
+              console.log(response);
+              setError(response.error);
+              //Respuesta al usuario de creación
+              if (response.data.results != null) {
+                toast.success(response.data.results, {
+                  duration: 4000,
+                  position: 'top-center',
+                });
+
+                // Redireccion a la tabla
+                return navigate('/MantenimientoMaterial');
+              }
+            })
+            .catch((error) => {
+              if (error instanceof SyntaxError) {
+                console.log(error);
+                setError(error);
+                throw new Error('Respuesta no válida del servidor');
+              }
+            });
+        }
       }
     } catch (e) {
       //Capturar error
