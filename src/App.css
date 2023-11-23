@@ -79,7 +79,7 @@
 }
 
 .infoCange{
-    width: 50%;
+    width: 60%;
     padding: 20px 50px;
     height:500px;
     display: flex;
@@ -87,8 +87,15 @@
     background-color: aliceblue;
     border-radius: 0.5rem;
     box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.3);
+
 }
+
 
 .containerCanjeo form{
     width: 100%;
+}
+
+.materiales{
+    width: 550px !important;
+    transform: translate(-600px,0px);
 }
