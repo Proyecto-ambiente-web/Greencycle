@@ -40,12 +40,12 @@
     margin-bottom: 2%;
 }
 
-.headerFactura div{
+.headerFactura div {
     align-items: center;
 }
 
 
-.headerFactura div h2{
+.headerFactura div h2 {
     margin-top: 10% !important;
 }
 
@@ -68,34 +68,80 @@
 
 
 
-.containerCanjeo{
+.containerCanjeo {
     width: 100%;
-    height:auto;
+    height: auto;
     margin-top: 1%;
     margin-bottom: 2%;
     display: flex;
     justify-content: center;
-    
+
 }
 
-.infoCange{
+.infoCange {
     width: 60%;
     padding: 20px 50px;
-    height:500px;
-    display: flex;
-    justify-content: space-between;
+    height: auto;
     background-color: aliceblue;
     border-radius: 0.5rem;
     box-shadow: 0 0.1rem 0.4rem rgba(0, 0, 0, 0.3);
 
 }
 
+.infoCentro {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
 
-.containerCanjeo form{
+.infoCentro div {
+    width: auto;
+    height: auto;
+}
+
+
+.infoCliente {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+
+.containerCanjeo form {
     width: 100%;
 }
 
-.materiales{
-    width: 550px !important;
-    transform: translate(-600px,0px);
+.materiales {
+    width: 100% !important;
+    height: auto;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translate(-20px, 0px);
+}
+
+#table-container {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#table-head {
+    width: 100% !important;
+    height: auto;
+}
+
+#table-head tr {
+    width: 100%;
+    height: auto;
+    text-align: center !important;
+}
+
+#table-head tr th {
+    padding: 8px;
+    text-align: left;
+}
+
+#table-body {
+    text-align: center;
 }

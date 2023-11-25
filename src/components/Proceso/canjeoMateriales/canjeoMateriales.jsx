@@ -15,6 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
+import { toast } from 'react-hot-toast';
 
 CanjeoMateriales.propTypes = { idUsuario: PropTypes.string.isRequired };
 
@@ -49,7 +50,7 @@ export function CanjeoMateriales({ idUsuario }) {
     // Esquema de validación
     const CanjeoSchema = yup.object({
         NombreCompleto: yup.mixed()
-            .required("Se requiere seleccionar una provincia"),
+            .required("Se requiere seleccionar un cliente"),
     });
 
     const {
@@ -66,7 +67,8 @@ export function CanjeoMateriales({ idUsuario }) {
                 {
                     material_id: '',
                     cantidad: '',
-                    precio: 0
+                    precio: '',
+                    subTotal: ''
                 },
             ],
             total: 0
@@ -127,37 +129,97 @@ export function CanjeoMateriales({ idUsuario }) {
     }, [idCliente]);
 
     /*  const watchActores=watch('actors')*/
+    const limpiarDetalle = () => {
+        const cuerpoTabla = document.getElementById("table-body");
+        cuerpoTabla.innerHTML = "";
+    };
+
+    const obtenerMaterial = (materialId) => {
+        return dataMaterial.find((item) => item.id === materialId) || null;
+    };
+
+    const verificarTotales = () => {
+        const valores = getValues()
+        let total = 0;
+        let tabla = '';
+
+        limpiarDetalle();
+        valores.materiales.map((item) => {
+            const material = obtenerMaterial(item.material_id);
+            const subTotal = parseInt(item.cantidad) * material.precio;
+            tabla += `<tr>
+                        <td>${material.descripcion}</td>
+                        <td>${item.cantidad}</td>
+                        <td>${material.precio}</td>
+                        <td>${subTotal}</td>
+                      </tr>`;
+
+            total += subTotal;
+        });
+
+        document.getElementById("table-body").innerHTML += tabla;
+        setValue('total', total)
+    }
 
     const handleInputChange = (index, name, value) => {
         setValue(name, value)
         const valores = getValues()
         console.log(valores.materiales[index])
         let total = 0;
+        let tabla = '';
 
+        limpiarDetalle();
         valores.materiales.map((item) => {
-            total += parseInt(item.cantidad) * parseInt(item.precio);
-        })
+            const material = obtenerMaterial(item.material_id);
+
+            if (isNaN(item.cantidad)) {
+                toast.error("Debe ingresar una cantidad numérica", {
+                    duration: 4000,
+                    position: "top-center",
+                });
+
+                limpiarDetalle();
+                return;
+            }
+
+            if (!item.cantidad || item.cantidad == 0) {
+                limpiarDetalle();
+                return;
+            }
+
+              // setValue(`materiales[${index}].subTotal`, subTotal)   ---> Fija subtotal en el UseForm
+              /* Debe actualizar los datos al quitar un material */
+               /* Debe validar que no seleccione el mismo material */
+            const subTotal = parseInt(item.cantidad) * material.precio;
+            tabla += `<tr>
+                        <td>${material.descripcion}</td>
+                        <td>${item.cantidad}</td>
+                        <td>${material.precio}</td>
+                        <td>${subTotal}</td>
+                      </tr>`;
+
+            total += subTotal;
+        });
+
+        document.getElementById("table-body").innerHTML += tabla;
         setValue('total', total)
     }
-
-    // useFieldArray:
-    // relaciones de muchos a muchos, con más campos además
-    // de las llaves primaras
-
-
 
     const removeMaterial = (index) => {
         if (fields.length === 1) {
             return;
         }
+
         remove(index);
+        verificarTotales();
     };
 
     const addNewMaterial = () => {
         append({
             material_id: '',
             cantidad: '',
-            precio: 0
+            precio: '',
+            subTotal: ''
         });
     };
 
@@ -190,33 +252,36 @@ export function CanjeoMateriales({ idUsuario }) {
         </Box>)
     if (error) return <p>Error: {error.message}</p>
 
-
-
     return (
         <>
             <section className="containerCanjeo">
                 <section className="infoCange">
-                    <div style={{ textAlign: 'left' }}>
-                        <h1>Canjeo de materiales</h1>
-                        <p>Fecha: {`${new Date().getDate()}/${(new Date().getMonth()) + 1}/${new Date().getFullYear()}`}</p>
-                        <br />
-                        <h1>Cetro de acopio </h1>
-                        <p>Nombre: {data.CentroAcopio}</p>
-                        <p>Administrador: {data.NombreAdmin}</p>
+                    <div className="infoCentro" style={{ textAlign: 'left' }}>
+                        <div>
+                            <h1>Canjeo de materiales</h1>
+                            <p>Fecha: {`${new Date().getDate()}/${(new Date().getMonth()) + 1}/${new Date().getFullYear()}`}</p>
+                        </div>
+
+                        <div>
+                            <h1>Cetro de acopio </h1>
+                            <p>Nombre: {data.CentroAcopio}</p>
+                            <p>Administrador: {data.NombreAdmin}</p>
+                        </div>
+
 
                     </div>
 
-                    <div style={{ width: '200px' }}>
+                    <div className="infoCliente">
                         <div style={{ textAlign: 'right' }}>
                             <h1 style={{ textAlign: 'left' }}>Facturado a:</h1>
                             <p style={{ textAlign: 'left' }}>Nombre: {dataCliente.NombreCompleto}</p>
                             <p style={{ textAlign: 'left' }}>Correo: {dataCliente.Correo}</p>
                             <p style={{ textAlign: 'left' }}>identificación: {dataCliente.id}</p>
                         </div>
-
+                        <br />
                         <form onSubmit={handleSubmit(onsubmit, onError)} noValidate>
-                            <Grid item xs={12} sm={2} style={{ width: '80%' }}>
-                                <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+                            <Grid item xs={12} sm={2} style={{ width: '40%' }}>
+                                <FormControl variant='standard' fullWidth >
                                     {loadedClientes && (
                                         <Controller
                                             name='NombreCompleto'
@@ -249,8 +314,8 @@ export function CanjeoMateriales({ idUsuario }) {
                                     </FormHelperText>
                                 </FormControl>
                             </Grid>
-
-                            <Grid item xs={12} sm={6}>
+                            {/**materiales */}
+                            <Grid item xs={12}  >
                                 <Typography variant='h6' gutterBottom>
                                     Materiales
                                     <Tooltip title='Agregar material'>
@@ -261,7 +326,7 @@ export function CanjeoMateriales({ idUsuario }) {
                                         </span>
                                     </Tooltip>
                                 </Typography>
-                                <FormControl className="materiales" variant='standard' fullWidth sx={{ m: 1 }}>
+                                <FormControl className="materiales" variant='standard'>
                                     {/* Array de controles de actor */}
                                     {loadedMaterial &&
                                         fields.map((field, index) => (
@@ -280,7 +345,9 @@ export function CanjeoMateriales({ idUsuario }) {
                                                         setValue('materiales', e.target.value, {
                                                             shouldValidate: true,
                                                         })
+
                                                     }
+
                                                 />
                                                 {errors.materiales && (
                                                     <FormHelperText
@@ -306,7 +373,7 @@ export function CanjeoMateriales({ idUsuario }) {
                                                                         : ' '}
                                                                 </Grid>
                                                             )}
-                                                             
+
                                                         </Grid>
                                                     </FormHelperText>
                                                 )}
@@ -314,7 +381,7 @@ export function CanjeoMateriales({ idUsuario }) {
                                         ))}
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={4} style={{ width: "50%" }}>
                                 <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
                                     <Controller
                                         name='total'
@@ -333,6 +400,22 @@ export function CanjeoMateriales({ idUsuario }) {
                                 </FormControl>
                             </Grid>
                         </form>
+                        <div id="table-container">
+                            <h1>Detalles del canjeo</h1>
+                            <table >
+                                <thead id="table-head">
+                                    <tr>
+                                        <th>Material</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>SubTotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </section>
             </section>

@@ -20,6 +20,7 @@ MaterialForm.propTypes = {
   onInputChange: PropTypes.func,
   disableRemoveButton: PropTypes.bool,
   field: PropTypes.object,
+
 };
 
 export function MaterialForm({
@@ -44,47 +45,34 @@ export function MaterialForm({
                 </IconButton>
               </Tooltip>
             </ListItemIcon>
-            <ListItemText>
+            <ListItemText style={{ paddingRight: "5%" }}>
               <Controller
                 key={index}
                 name={`materiales.${index}.material_id`}
                 control={control}
                 render={({ field }) => (
-                  <SelectMaterial field={field} data={data}  
-                   />
+                  <SelectMaterial field={field} data={data}
+                  />
                 )}
-               
+
               />
-              
+
             </ListItemText>
             <ListItemText sx={{ m: 1 }}>
               <Controller
                 key={index}
                 name={`materiales.${index}.cantidad`}
                 control={control}
-                render={({ field }) => 
-                <TextField 
-                {...field}
-                label='Cantidad'
-                 onChange={(e)=>
-                  onInputChange(index,`materiales.${index}.cantidad`,e.target.value)} 
-                 />}
+                render={({ field }) =>
+                  <TextField
+                    {...field}
+                    label='Cantidad'
+                    onChange={(e) =>
+                      onInputChange(index, `materiales.${index}.cantidad`, e.target.value)}
+                  />}
               />
             </ListItemText>
-            <ListItemText sx={{ m: 1 }}>
-              <Controller
-                key={index}
-                name={`materiales.${index}.precio`}
-                control={control}
-                render={({ field }) => 
-                <TextField 
-                {...field}
-                label='precio'
-                 onChange={(e)=>
-                  onInputChange(index,`materiales.${index}.precio`,e.target.value)} 
-                 />}
-              />
-            </ListItemText>
+
             <ListItemIcon>
               <Tooltip title={`Eliminar material ${index + 1}`}>
                 <span>

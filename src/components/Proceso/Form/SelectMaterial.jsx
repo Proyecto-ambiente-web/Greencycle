@@ -19,12 +19,11 @@ export function SelectMaterial({ field, data }) {
           label='material'
           defaultValue=''
           value={field.value}
-          precio=''
         >
           {data &&
             data.map((material) => (
               <MenuItem key={material.id} value={material.id} precio={material.precio}>
-                {material.descripcion} 
+                {`${material.descripcion} Precio: ${material.precio}` }
               </MenuItem>
             ))}
         </Select>

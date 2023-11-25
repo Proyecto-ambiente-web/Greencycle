@@ -21,7 +21,7 @@ export function SelectCliente({ field, data, onSelection }) {
     <>
       <>
         <InputLabel id='NombreCompleto'>Cliente</InputLabel>
-        <Select
+        <Select style={{marginTop:"15px"}}
           {...field}
           labelId='NombreCompleto'
           label='NombreCompleto'
