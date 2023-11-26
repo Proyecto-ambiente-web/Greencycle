@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CentroAcopioServices from "../../../services/CentroAcopioServices";
-import { Box, FormControl, Grid, LinearProgress } from "@mui/material";
+import { Box, FormControl, Button, Grid, LinearProgress } from "@mui/material";
 import PropTypes from "prop-types";
 import { SelectCliente } from "../../Proceso/Form/SelectCliente";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
@@ -16,11 +16,14 @@ import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 CanjeoMateriales.propTypes = { idUsuario: PropTypes.string.isRequired };
 
 
 export function CanjeoMateriales({ idUsuario }) {
+    const navigate = useNavigate();
+
     const [data, setData] = useState(null);
     //Error del API
     const [error, setError] = useState("");
@@ -28,12 +31,13 @@ export function CanjeoMateriales({ idUsuario }) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        //Lista de peliculas del API
+        //Lista de centros del API
         CentroAcopioServices.getCentroAcopioXAdmin(idUsuario)
             .then(response => {
                 setData(response.data.results)
                 setError(response.error)
                 setLoaded(true)
+                setValue('idCentro', response.data.results.id)
             })
             .catch(
                 error => {
@@ -49,7 +53,7 @@ export function CanjeoMateriales({ idUsuario }) {
 
     // Esquema de validación
     const CanjeoSchema = yup.object({
-        NombreCompleto: yup.mixed()
+        NombreCompleto: yup.string()
             .required("Se requiere seleccionar un cliente"),
     });
 
@@ -71,6 +75,7 @@ export function CanjeoMateriales({ idUsuario }) {
                     subTotal: ''
                 },
             ],
+            idCentro: '',
             total: 0
         },
 
@@ -128,7 +133,6 @@ export function CanjeoMateriales({ idUsuario }) {
             });
     }, [idCliente]);
 
-    /*  const watchActores=watch('actors')*/
     const limpiarDetalle = () => {
         const cuerpoTabla = document.getElementById("table-body");
         cuerpoTabla.innerHTML = "";
@@ -138,7 +142,7 @@ export function CanjeoMateriales({ idUsuario }) {
         return dataMaterial.find((item) => item.id === materialId) || null;
     };
 
-    const verificarTotales = () => {
+    const actualizarTotal = () => {
         const valores = getValues()
         let total = 0;
         let tabla = '';
@@ -147,6 +151,7 @@ export function CanjeoMateriales({ idUsuario }) {
         valores.materiales.map((item) => {
             const material = obtenerMaterial(item.material_id);
             const subTotal = parseInt(item.cantidad) * material.precio;
+
             tabla += `<tr>
                         <td>${material.descripcion}</td>
                         <td>${item.cantidad}</td>
@@ -167,10 +172,19 @@ export function CanjeoMateriales({ idUsuario }) {
         console.log(valores.materiales[index])
         let total = 0;
         let tabla = '';
+        let material;
+        let subTotal = 0;
+        let indice = parseInt(index) === 0? index : parseInt(index) - 1;
 
         limpiarDetalle();
         valores.materiales.map((item) => {
-            const material = obtenerMaterial(item.material_id);
+             material = obtenerMaterial(item.material_id);
+
+            /* Debe validar que no seleccione el mismo material */
+            if (!item.cantidad || item.cantidad == 0) {
+                limpiarDetalle();
+                return;
+            }
 
             if (isNaN(item.cantidad)) {
                 toast.error("Debe ingresar una cantidad numérica", {
@@ -182,15 +196,8 @@ export function CanjeoMateriales({ idUsuario }) {
                 return;
             }
 
-            if (!item.cantidad || item.cantidad == 0) {
-                limpiarDetalle();
-                return;
-            }
+            subTotal = parseInt(item.cantidad) * material.precio;
 
-              // setValue(`materiales[${index}].subTotal`, subTotal)   ---> Fija subtotal en el UseForm
-              /* Debe actualizar los datos al quitar un material */
-               /* Debe validar que no seleccione el mismo material */
-            const subTotal = parseInt(item.cantidad) * material.precio;
             tabla += `<tr>
                         <td>${material.descripcion}</td>
                         <td>${item.cantidad}</td>
@@ -199,9 +206,12 @@ export function CanjeoMateriales({ idUsuario }) {
                       </tr>`;
 
             total += subTotal;
+            setValue(`materiales[${indice}].precio`, material.precio)
+            setValue(`materiales[${indice}].subTotal`, subTotal)
+            indice++;
         });
 
-        document.getElementById("table-body").innerHTML += tabla;
+        document.getElementById("table-body").innerHTML += tabla;  
         setValue('total', total)
     }
 
@@ -209,9 +219,9 @@ export function CanjeoMateriales({ idUsuario }) {
         if (fields.length === 1) {
             return;
         }
-
-        remove(index);
-        verificarTotales();
+      
+        remove(index);  
+        actualizarTotal();
     };
 
     const addNewMaterial = () => {
@@ -221,6 +231,43 @@ export function CanjeoMateriales({ idUsuario }) {
             precio: '',
             subTotal: ''
         });
+    };
+
+    const onSubmit = (DataForm) => {
+        console.log('Formulario:');
+        console.log(DataForm);
+
+        try {
+            if (CanjeoSchema.isValid()) {
+                 //Crear canjeo
+                 CanjeoService.crearCanjeo(DataForm)
+                    .then((response) => {
+                      console.log(response);
+                      setError(response.error);
+                      //Respuesta al usuario de creación
+                      if (response.data.results != null) {
+                        toast.success(response.data.results, {
+                          duration: 4000,
+                          position: 'top-center',
+                        });
+                        
+                        //return navigate(`/DetalleHistorialMaterial/${response.data.results[0].id}`);
+                        console.log('HPPP');
+                        console.log(response.data.results);
+                      }
+                    })
+                    .catch((error) => {
+                      if (error instanceof SyntaxError) {
+                        console.log(error);
+                        setError(error);
+                        throw new Error('Respuesta no válida del servidor');
+                      }
+                    });  
+                    
+            }
+        } catch (e) {
+            //Capturar error
+        }
     };
 
     console.log(data);
@@ -263,7 +310,7 @@ export function CanjeoMateriales({ idUsuario }) {
                         </div>
 
                         <div>
-                            <h1>Cetro de acopio </h1>
+                            <h1>Centro de acopio </h1>
                             <p>Nombre: {data.CentroAcopio}</p>
                             <p>Administrador: {data.NombreAdmin}</p>
                         </div>
@@ -279,7 +326,7 @@ export function CanjeoMateriales({ idUsuario }) {
                             <p style={{ textAlign: 'left' }}>identificación: {dataCliente.id}</p>
                         </div>
                         <br />
-                        <form onSubmit={handleSubmit(onsubmit, onError)} noValidate>
+                        <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
                             <Grid item xs={12} sm={2} style={{ width: '40%' }}>
                                 <FormControl variant='standard' fullWidth >
                                     {loadedClientes && (
@@ -310,7 +357,7 @@ export function CanjeoMateriales({ idUsuario }) {
                                         />
                                     )}
                                     <FormHelperText sx={{ color: '#d32f2f' }}>
-                                        {errors.cliente ? errors.cliente.message : ' '}
+                                        {errors.NombreCompleto ? errors.NombreCompleto.message : ' '}
                                     </FormHelperText>
                                 </FormControl>
                             </Grid>
@@ -381,23 +428,15 @@ export function CanjeoMateriales({ idUsuario }) {
                                         ))}
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12} sm={4} style={{ width: "50%" }}>
-                                <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-                                    <Controller
-                                        name='total'
-                                        control={control}
-                                        render={({ field }) => (
-                                            <TextField
-                                                {...field}
-                                                id='total'
-                                                label='Total'
-                                                InputProps={{
-                                                    readOnly: true,
-                                                }}
-                                            />
-                                        )}
-                                    />
-                                </FormControl>
+                            <Grid item xs={12} sm={12}>
+                                <Button
+                                    type='submit'
+                                    variant='contained'
+                                    color='secondary'
+                                    sx={{ m: 1 }}
+                                >
+                                    Formalizar
+                                </Button>
                             </Grid>
                         </form>
                         <div id="table-container">
@@ -416,6 +455,24 @@ export function CanjeoMateriales({ idUsuario }) {
                                 </tbody>
                             </table>
                         </div>
+                        <Grid item xs={12} sm={4} className="containerTotal">
+                            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
+                                <Controller
+                                    name='total'
+                                    control={control}
+                                    render={({ field }) => (
+                                        <TextField
+                                            {...field}
+                                            id='total'
+                                            label='Total'
+                                            InputProps={{
+                                                readOnly: true,
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </FormControl>
+                        </Grid>
                     </div>
                 </section>
             </section>

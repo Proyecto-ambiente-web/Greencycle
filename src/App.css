@@ -50,7 +50,7 @@
 }
 
 .containerFactura {
-    width: 50%;
+    width: 100%;
     height: auto;
     display: flex;
     justify-content: center;
@@ -124,6 +124,8 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    display: grid;
+    place-items: center;
 }
 
 #table-head {
@@ -144,4 +146,12 @@
 
 #table-body {
     text-align: center;
+}
+
+.containerTotal{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: grid;
+    justify-content: right;
 }

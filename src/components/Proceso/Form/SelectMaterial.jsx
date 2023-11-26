@@ -23,7 +23,7 @@ export function SelectMaterial({ field, data }) {
           {data &&
             data.map((material) => (
               <MenuItem key={material.id} value={material.id} precio={material.precio}>
-                {`${material.descripcion} Precio: ${material.precio}` }
+                {`${material.descripcion}` }
               </MenuItem>
             ))}
         </Select>
