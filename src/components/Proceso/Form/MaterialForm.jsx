@@ -6,7 +6,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import Tooltip from '@mui/material/Tooltip';
 import { SelectMaterial } from './SelectMaterial';
 import { Controller } from 'react-hook-form';
@@ -41,7 +41,7 @@ export function MaterialForm({
             <ListItemIcon>
               <Tooltip title={`Material ${index + 1}`}>
                 <IconButton>
-                  <DirectionsRunIcon />
+                  <ViewInArIcon />
                 </IconButton>
               </Tooltip>
             </ListItemIcon>

@@ -55,6 +55,7 @@ export function CanjeoMateriales({ idUsuario }) {
     const CanjeoSchema = yup.object({
         NombreCompleto: yup.string()
             .required("Se requiere seleccionar un cliente"),
+
     });
 
     const {
@@ -170,17 +171,12 @@ export function CanjeoMateriales({ idUsuario }) {
         setValue(name, value)
         const valores = getValues()
         console.log(valores.materiales[index])
-        let total = 0;
-        let tabla = '';
-        let material;
-        let subTotal = 0;
-        let indice = parseInt(index) === 0? index : parseInt(index) - 1;
+        let total = 0, tabla = '', material, subTotal = 0, indice = 0;
 
         limpiarDetalle();
         valores.materiales.map((item) => {
-             material = obtenerMaterial(item.material_id);
+            material = obtenerMaterial(item.material_id);
 
-            /* Debe validar que no seleccione el mismo material */
             if (!item.cantidad || item.cantidad == 0) {
                 limpiarDetalle();
                 return;
@@ -188,7 +184,7 @@ export function CanjeoMateriales({ idUsuario }) {
 
             if (isNaN(item.cantidad)) {
                 toast.error("Debe ingresar una cantidad numérica", {
-                    duration: 4000,
+                    duration: 2000,
                     position: "top-center",
                 });
 
@@ -206,12 +202,13 @@ export function CanjeoMateriales({ idUsuario }) {
                       </tr>`;
 
             total += subTotal;
+
             setValue(`materiales[${indice}].precio`, material.precio)
             setValue(`materiales[${indice}].subTotal`, subTotal)
             indice++;
         });
 
-        document.getElementById("table-body").innerHTML += tabla;  
+        document.getElementById("table-body").innerHTML += tabla;
         setValue('total', total)
     }
 
@@ -219,8 +216,8 @@ export function CanjeoMateriales({ idUsuario }) {
         if (fields.length === 1) {
             return;
         }
-      
-        remove(index);  
+
+        remove(index);
         actualizarTotal();
     };
 
@@ -236,34 +233,81 @@ export function CanjeoMateriales({ idUsuario }) {
     const onSubmit = (DataForm) => {
         console.log('Formulario:');
         console.log(DataForm);
+        let hasError = false;
 
         try {
+            if (DataForm.materiales[0].material_id == "") {
+                toast.error("Se requiere seleccionar mínimo un Material", {
+                    duration: 4000,
+                    position: 'top-center',
+                });
+                return;
+            }
+
+            var material = DataForm.materiales[0].material_id;
+
+            DataForm.materiales.forEach((element) => {
+                if (hasError) {
+                    return;
+                }
+
+                if (element.cantidad == 0 || !element.cantidad) {
+                    toast.error("Debe ingresar la cantidad del material", {
+                        duration: 4000,
+                        position: 'top-center',
+                    });
+
+                    hasError = true;
+                }
+
+                if (isNaN(element.cantidad)) {
+                    toast.error("Debe ingresar una cantidad numérica", {
+                        duration: 4000,
+                        position: 'top-center',
+                    });
+
+                    hasError = true;
+                }
+
+                if (element.material_id == material) {
+                    toast.error("No se puede repetir el Material", {
+                        duration: 4000,
+                        position: 'top-center',
+                    });
+
+                    material = element.material_id
+                    hasError = true;
+                }
+            });
+
+            if (hasError) {
+                return;
+            }
+
             if (CanjeoSchema.isValid()) {
-                 //Crear canjeo
-                 CanjeoService.crearCanjeo(DataForm)
+                //Crear canjeo
+                CanjeoService.crearCanjeo(DataForm)
                     .then((response) => {
-                      console.log(response);
-                      setError(response.error);
-                      //Respuesta al usuario de creación
-                      if (response.data.results != null) {
-                        toast.success(response.data.results, {
-                          duration: 4000,
-                          position: 'top-center',
-                        });
-                        
-                        //return navigate(`/DetalleHistorialMaterial/${response.data.results[0].id}`);
-                        console.log('HPPP');
-                        console.log(response.data.results);
-                      }
+                        console.log(response);
+                        setError(response.error);
+                        //Respuesta al usuario de creación
+                        if (response.data.results != null) {
+                            toast.success(response.data.results, {
+                                duration: 4000,
+                                position: 'top-center',
+                            });
+
+                            return navigate(`/DetalleHistorialMaterial/${response.data.results[0].id}`);
+
+                        }
                     })
                     .catch((error) => {
-                      if (error instanceof SyntaxError) {
-                        console.log(error);
-                        setError(error);
-                        throw new Error('Respuesta no válida del servidor');
-                      }
-                    });  
-                    
+                        if (error instanceof SyntaxError) {
+                            console.log(error);
+                            setError(error);
+                            throw new Error('Respuesta no válida del servidor');
+                        }
+                    });
             }
         } catch (e) {
             //Capturar error
