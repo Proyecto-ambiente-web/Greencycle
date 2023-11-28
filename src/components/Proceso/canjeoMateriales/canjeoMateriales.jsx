@@ -92,11 +92,11 @@ export function CanjeoMateriales({ idUsuario }) {
 
     // Si ocurre error al realizar el submit
     const onError = (errors, e) => console.log(errors, e);
-    //Lista de provincia
+    //Lista de usuarios clientes
     const [dataClientes, setdataClientes] = useState({});
     const [loadedClientes, setLoadedClientes] = useState(false);
     useEffect(() => {
-        UsuarioService.usuariosClientes(3)
+        UsuarioService.usuariosClientes(3) //tipo del cliente
             .then((response) => {
                 console.log(response);
                 setdataClientes(response.data.results);
@@ -195,7 +195,7 @@ export function CanjeoMateriales({ idUsuario }) {
             subTotal = parseInt(item.cantidad) * material.precio;
 
             tabla += `<tr>
-                        <td>${material.descripcion}</td>
+                        <td style="text-align: left;">${material.descripcion}</td>
                         <td>${item.cantidad}</td>
                         <td>${material.precio}</td>
                         <td>${subTotal}</td>
@@ -234,6 +234,7 @@ export function CanjeoMateriales({ idUsuario }) {
         console.log('Formulario:');
         console.log(DataForm);
         let hasError = false;
+        const materialIdSet = new Set();
 
         try {
             if (DataForm.materiales[0].material_id == "") {
@@ -244,12 +245,21 @@ export function CanjeoMateriales({ idUsuario }) {
                 return;
             }
 
-            var material = DataForm.materiales[0].material_id;
-
             DataForm.materiales.forEach((element) => {
                 if (hasError) {
                     return;
                 }
+
+                if (materialIdSet.has(element.material_id)) { //materialIdSet es como un array donde pregunta por los id del material
+                    toast.error("No se permiten Materiales duplicados", {
+                        duration: 4000,
+                        position: 'top-center',
+                    });
+
+                    hasError = true;
+                }
+
+                materialIdSet.add(element.material_id);
 
                 if (element.cantidad == 0 || !element.cantidad) {
                     toast.error("Debe ingresar la cantidad del material", {
@@ -266,16 +276,6 @@ export function CanjeoMateriales({ idUsuario }) {
                         position: 'top-center',
                     });
 
-                    hasError = true;
-                }
-
-                if (element.material_id == material) {
-                    toast.error("No se puede repetir el Material", {
-                        duration: 4000,
-                        position: 'top-center',
-                    });
-
-                    material = element.material_id
                     hasError = true;
                 }
             });
@@ -297,8 +297,7 @@ export function CanjeoMateriales({ idUsuario }) {
                                 position: 'top-center',
                             });
 
-                            return navigate(`/DetalleHistorialMaterial/${response.data.results[0].id}`);
-
+                            return navigate(`/DetalleHistorialMaterial/${response.data.canjeo.idCanjeo}`);
                         }
                     })
                     .catch((error) => {

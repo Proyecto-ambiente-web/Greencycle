@@ -10,9 +10,9 @@ import { Info } from "@mui/icons-material";
 import informeImagen from "../../../assets/images/informe.png";
 import SavingsIcon from '@mui/icons-material/Savings';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import HomeIcon from '@mui/icons-material/Home';
+//import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import KeyIcon from '@mui/icons-material/Key';
+//import KeyIcon from '@mui/icons-material/Key';
 
 HistorialCanjeosAcopio.propTypes = { idUsuario: PropTypes.string.isRequired };
 
@@ -90,12 +90,6 @@ export function HistorialCanjeosAcopio({ idUsuario }) {
                             </Typography>
                             <Typography variant='body2' color='text.secondary' className="textoIzquierda">
                                 <AccountCircleIcon />   Nombre del cliente:  {item.NombreCliente}
-                            </Typography>
-                            <Typography variant='body2' color='text.secondary' className="textoIzquierda">
-                                <HomeIcon />   Nombre del centro:  {item.nombre}
-                            </Typography>
-                            <Typography variant='body2' color='text.secondary' className="textoIzquierda">
-                                <KeyIcon />   Código del centro:  {item.idCentroAcopio}
                             </Typography>
                             <Typography variant='body2' color='text.secondary' className="textoIzquierda">
                                 <SavingsIcon />   EcoMonedas: {item.TotalEcoMoneda}
