@@ -20,7 +20,7 @@ MaterialForm.propTypes = {
   onInputChange: PropTypes.func,
   disableRemoveButton: PropTypes.bool,
   field: PropTypes.object,
-
+  onSelection: PropTypes.func,
 };
 
 export function MaterialForm({
@@ -30,6 +30,7 @@ export function MaterialForm({
   onRemove,
   disableRemoveButton,
   onInputChange,
+  onSelection,
   // eslint-disable-next-line no-unused-vars
   field,
 }) {
@@ -51,7 +52,7 @@ export function MaterialForm({
                 name={`materiales.${index}.material_id`}
                 control={control}
                 render={({ field }) => (
-                  <SelectMaterial field={field} data={data}
+                  <SelectMaterial field={field} data={data} onSelection={onSelection}
                   />
                 )}
 

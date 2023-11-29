@@ -20,7 +20,6 @@ import { useNavigate } from 'react-router-dom';
 
 CanjeoMateriales.propTypes = { idUsuario: PropTypes.string.isRequired };
 
-
 export function CanjeoMateriales({ idUsuario }) {
     const navigate = useNavigate();
 
@@ -150,17 +149,21 @@ export function CanjeoMateriales({ idUsuario }) {
 
         limpiarDetalle();
         valores.materiales.map((item) => {
-            const material = obtenerMaterial(item.material_id);
-            const subTotal = parseInt(item.cantidad) * material.precio;
+            if (item.cantidad && item.cantidad != 0 && !isNaN(item.cantidad)) {
+                const material = obtenerMaterial(item.material_id);
+                const subTotal = parseInt(item.cantidad) * material.precio;
 
-            tabla += `<tr>
-                        <td>${material.descripcion}</td>
-                        <td>${item.cantidad}</td>
-                        <td>${material.precio}</td>
-                        <td>${subTotal}</td>
-                      </tr>`;
+                tabla += `<tr>
+                            <td>${material.descripcion}</td>
+                            <td>${item.cantidad}</td>
+                            <td>${material.precio}</td>
+                            <td>${subTotal}</td>
+                          </tr>`;
 
-            total += subTotal;
+                total += subTotal;
+            } else {
+                return;
+            }
         });
 
         document.getElementById("table-body").innerHTML += tabla;
@@ -416,6 +419,7 @@ export function CanjeoMateriales({ idUsuario }) {
                                         </span>
                                     </Tooltip>
                                 </Typography>
+
                                 <FormControl className="materiales" variant='standard'>
                                     {/* Array de controles de actor */}
                                     {loadedMaterial &&
@@ -431,11 +435,14 @@ export function CanjeoMateriales({ idUsuario }) {
                                                     control={control}
                                                     onInputChange={handleInputChange}
                                                     disableRemoveButton={fields.length === 1}
-                                                    onChange={(e) =>
+                                                    onSelection={() => {
+                                                        actualizarTotal()
+                                                    }}
+                                                    onChange={(e) => {
                                                         setValue('materiales', e.target.value, {
                                                             shouldValidate: true,
                                                         })
-
+                                                    }
                                                     }
 
                                                 />
@@ -470,6 +477,8 @@ export function CanjeoMateriales({ idUsuario }) {
                                             </div>
                                         ))}
                                 </FormControl>
+
+
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Button
@@ -482,22 +491,24 @@ export function CanjeoMateriales({ idUsuario }) {
                                 </Button>
                             </Grid>
                         </form>
+
                         <div id="table-container">
                             <h1>Detalles del canjeo</h1>
-                            <table >
-                                <thead id="table-head">
-                                    <tr>
-                                        <th>Material</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio</th>
-                                        <th>SubTotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table-body">
+                                <table >
+                                    <thead id="table-head">
+                                        <tr>
+                                            <th>Material</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>SubTotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body">
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
                         </div>
+
                         <Grid item xs={12} sm={4} className="containerTotal">
                             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
                                 <Controller
@@ -519,7 +530,6 @@ export function CanjeoMateriales({ idUsuario }) {
                     </div>
                 </section>
             </section>
-
         </>
     )
 }

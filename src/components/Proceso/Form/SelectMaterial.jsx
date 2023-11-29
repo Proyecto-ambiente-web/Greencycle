@@ -7,8 +7,17 @@ import PropTypes from 'prop-types';
 SelectMaterial.propTypes = {
   data: PropTypes.array,
   field: PropTypes.object,
+  onSelection: PropTypes.func,
 };
-export function SelectMaterial({ field, data }) {
+
+export function SelectMaterial({ field, data, onSelection }) {
+  const handleChange = (event) => {
+    // Propaga el evento al componente padre
+    field.onChange(event);
+    // Llama a la función de devolución de llamada con el valor seleccionado
+    onSelection();
+  };
+
   return (
     <>
       <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
@@ -19,11 +28,12 @@ export function SelectMaterial({ field, data }) {
           label='material'
           defaultValue=''
           value={field.value}
+          onChange={handleChange} // Agregado el evento onChange
         >
           {data &&
             data.map((material) => (
               <MenuItem key={material.id} value={material.id} precio={material.precio}>
-                {`${material.descripcion}` }
+                {`${material.descripcion}`}
               </MenuItem>
             ))}
         </Select>
