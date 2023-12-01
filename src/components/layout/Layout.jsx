@@ -7,14 +7,12 @@ import { Toaster } from 'react-hot-toast';
 <Toaster position='top-center' />
 
 Layout.propTypes = { children: PropTypes.node.isRequired };
-Layout.propTypes = { setIdUsuario: PropTypes.func.isRequired };
-Layout.propTypes = { setidTipoUsuario: PropTypes.number.isRequired };
 
-export function Layout({ children, setIdUsuario, setidTipoUsuario }) {
+export function Layout({ children }) {
     return (
         <ThemeProvider theme={appTheme}>
             <CssBaseline enableColorScheme />
-            <Header setIdUsuario={setIdUsuario} setidTipoUsuario={setidTipoUsuario} />
+            <Header />
             <Container
                 maxWidth="xl"
                 style={{ paddingTop: "1rem", paddingBottom: "4.5rem" }}

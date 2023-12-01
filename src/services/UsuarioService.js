@@ -18,6 +18,14 @@ class UsuarioService {
     usuariosClientes(usuarioId) {
         return axios.get(BASE_URL + '/'+ 'usuarioClientes' + '/' + usuarioId)
     }
+
+    loginUser(User){
+        return axios.post(BASE_URL+ '/login/', User);
+    }
+
+    create(User){
+        return axios.post(BASE_URL, User);
+    }
 }
 
 export default new UsuarioService();

@@ -14,14 +14,18 @@ import MenuItem from "@mui/material/MenuItem";
 import LogoImage from "../../assets/images/Logo.jpg";
 import { useState } from "react";
 import { useEffect } from "react";
-import UsuarioService from "../../services/UsuarioService";
-import InfoIcon from '@mui/icons-material/Info';
+//import UsuarioService from "../../services/UsuarioService";
+//import InfoIcon from '@mui/icons-material/Info';
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { UserContext } from '../../context/UserContext';
+import MenuList from '@mui/material/MenuList';
+
 
 Header.propTypes = { setIdUsuario: PropTypes.func.isRequired };
 Header.propTypes = { setidTipoUsuario: PropTypes.number.isRequired };
 
-function Header({ setIdUsuario, setidTipoUsuario }) {
+function Header() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElMantenimiento, setAnchorElMantenimiento] =
@@ -68,7 +72,18 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
         setAnchorElReporte(null);
     };
 
-    //Resultado de consumo del API, respuesta
+    //obtener la informacion del usuario logueado
+    //autorizar para ocultar enlaces
+    const { user, decodeToken, autorize } = useContext(UserContext)
+    const [userData, setUserData] = useState(decodeToken())
+
+    useEffect(() => {
+        setUserData(decodeToken())
+
+    }, [user])
+
+
+    /* //Resultado de consumo del API, respuesta
     const [data, setData] = useState(null);
     //Error del API
     const [error, setError] = useState("");
@@ -100,7 +115,7 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
 
     if (!loaded) return <InfoIcon />
     if (error) return <p>Error: {error.message}</p>
-
+ */
 
     return (
         <AppBar position="static" sx={{ backgroundColor: "primary.main" }}>
@@ -273,11 +288,22 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title={data.NombreCompleto}>
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Usuario" src="" />
-                            </IconButton>
-                        </Tooltip>
+                        {userData && (
+                            <Tooltip title={userData.NombreCompleto}>
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt="Usuario" src="" />
+                                </IconButton>
+                            </Tooltip>
+                        )}
+
+                        {!userData && (
+                            <Tooltip title='usuario'>
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt="Usuario" src="" />
+                                </IconButton>
+                            </Tooltip>
+                        )}
+
                         <Menu
                             sx={{ mt: "45px" }}
                             id="menu-appbar-user"
@@ -298,6 +324,30 @@ function Header({ setIdUsuario, setidTipoUsuario }) {
                             <MenuItem key="Historial" href="/Historial/" component="a">
                                 <Typography textAlign="center" >Historial</Typography>
                             </MenuItem>
+
+                            {!userData && (
+                                <MenuList>
+                                    <MenuItem component='a' href='/user/login'>
+                                        <Typography textAlign="center">Login</Typography>
+                                    </MenuItem>
+                                    <MenuItem component='a' href='/user/create'>
+                                        <Typography textAlign="center">Registrarse</Typography>
+                                    </MenuItem>
+                                </MenuList>
+                            )}
+
+                            {userData && (
+                                <MenuList>
+                                    <MenuItem>
+                                        <Typography variant='subtitle1' gutterBottom>
+                                            {userData?.email}
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem color='secondary' component='a' href='/user/logout'>
+                                        <Typography textAlign='center'>Logout</Typography>
+                                    </MenuItem>
+                                </MenuList>
+                            )}
                         </Menu>
                     </Box>
                     {/**hola es para el  */}
