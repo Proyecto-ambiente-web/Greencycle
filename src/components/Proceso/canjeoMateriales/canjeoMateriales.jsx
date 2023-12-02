@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CentroAcopioServices from "../../../services/CentroAcopioServices";
 import { Box, FormControl, Button, Grid, LinearProgress } from "@mui/material";
-import PropTypes from "prop-types";
 import { SelectCliente } from "../../Proceso/Form/SelectCliente";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,10 +16,10 @@ import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../../../context/UserContext";
 
-CanjeoMateriales.propTypes = { idUsuario: PropTypes.string.isRequired };
 
-export function CanjeoMateriales({ idUsuario }) {
+export function CanjeoMateriales() {
     const navigate = useNavigate();
 
     const [data, setData] = useState(null);
@@ -29,9 +28,19 @@ export function CanjeoMateriales({ idUsuario }) {
     //Booleano para establecer sí se ha recibido respuesta
     const [loaded, setLoaded] = useState(false);
 
+    //obtener la informacion del usuario logueado
+    //autorizar para ocultar enlaces
+    const { user, decodeToken } = useContext(UserContext)
+    const [userData, setUserData] = useState(decodeToken())
+
+    useEffect(() => {
+        setUserData(decodeToken())
+
+    }, [user])
+
     useEffect(() => {
         //Lista de centros del API
-        CentroAcopioServices.getCentroAcopioXAdmin(idUsuario)
+        CentroAcopioServices.getCentroAcopioXAdmin(userData.id)
             .then(response => {
                 setData(response.data.results)
                 setError(response.error)
@@ -48,13 +57,12 @@ export function CanjeoMateriales({ idUsuario }) {
                     }
                 }
             )
-    }, [idUsuario]);
+    }, [userData]);
 
     // Esquema de validación
     const CanjeoSchema = yup.object({
         NombreCompleto: yup.string()
             .required("Se requiere seleccionar un cliente"),
-
     });
 
     const {

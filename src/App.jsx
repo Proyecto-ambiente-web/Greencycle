@@ -14,8 +14,7 @@ import { Historial } from './components/Historial/historial';
 import { HistorialMaterial } from './components/Historial/historialMaterial';
 import { DetalleHistorialMaterial } from './components/Historial/detalleHistorialMaterial';
 import { HistorialCanjeosAcopio } from './components/Historial/admin/HistorialCanjeosAcopio';
-//import { useState } from 'react';
-//import { Grid } from '@mui/material';
+//import { useState, useEffect } from 'react';
 import CuponImagen from "../src/assets/images/cupones.avif";
 import material from "../src/assets/images/historialMateriales.avif";
 import centroAcopio from "../src/assets/images/centroAcopioCanjeos.png";
@@ -31,7 +30,9 @@ import { Auth } from './components/User/Auth'
 import { Login } from './components/User/Login'
 import { Logout } from './components/User/Logout'
 import { Signup } from './components/User/Signup'
-
+import { Unauthorized } from './components/User/Unauthorized'
+//import { useContext } from 'react';
+//import { UserContext } from './context/UserContext';
 
 export default function App() {
 
@@ -62,64 +63,118 @@ export default function App() {
       element: <DetalleCentroAcopio />
     },
     {
-
       path: '/',
       element: <Auth allowedRoles={['Cliente']} />,
       children: [
         {
-          path: '/Historial',
-          children: [
-            {
-              element: <Historial imagen={material} url={'/HistorialMaterial'} titulo={"Historial de Canjes de Materiales"} /> //historial material cliente
-            },
-            {
-              element: <Historial imagen={CuponImagen} url={'/HistorialMaterial'} titulo={"Historial de Canjes de cupones"} /> // historial cupones cliente
-            }
-          ]
+          path: '/HistorialCliente',
+          element: (
+            <>
+              <div style={{ display: 'flex', width: '100%', paddingLeft: '300px' }}>
+                <Historial imagen={material} url={'/HistorialMaterial'} titulo={"Historial de Canjes de Materiales"} /> {/* historial material cliente */}
+
+                <Historial imagen={CuponImagen} url={'/HistorialMaterial'} titulo={"Historial de Canjes de cupones"} />  {/* historial cupones cliente */}
+              </div>
+
+            </>
+          )
         },
+        {
+          path: '/HistorialMaterial',
+          element: <HistorialMaterial /* idUsuario={userData.id} */ />
+        }
+      ]
+    },
+    {
+      path: '/',
+      element: <Auth allowedRoles={['Administrador centro acopio']} />,
+      children: [
+        {
+          path: '/HistorialCentro',
+          element: (
+            <div style={{ display: 'flex', width: '100%', paddingLeft: '550px' }}>
+              <Historial imagen={centroAcopio} url={'/HistorialMaterialCentro'} titulo={"Historial de Canjes del centro"} /> {/* historial material cliente */}
+            </div>
+
+          )
+        },
+        {
+          path: '/HistorialMaterialCentro',
+          element: <HistorialMaterial /* idUsuario={userData.id} */ />
+        },
+        {
+          path: '/HistorialCanjeosAcopio',
+          element: <HistorialCanjeosAcopio /* idUsuario={userData.id} */ />
+        },
+        {
+          path: '/CanjeoMateriales',
+          element: <CanjeoMateriales /* idUsuario={idUsuario} */ />
+        }
+      ]
+    },
+    {
+      path: '/',
+      element: <Auth allowedRoles={['Administrador centro acopio', 'Cliente']} />,
+      children: [ 
+        {
+          path: '/DetalleHistorialMaterial/:id',
+          element: <DetalleHistorialMaterial />
+        }
+      ]
+    },
+    {
+      path: '/',
+      element: <Auth allowedRoles={['Administrador']} />,
+      children: [
+
+        {
+          path: '/MantenimientoMaterial',
+          element: <MantenimientoMaterial />
+        },
+        {
+          path: '/UpdateMaterial/:id',
+          element: <UpdateMaterial />
+        },
+        {
+          path: '/CreateMaterial',
+          element: <CreateMaterial />
+        },
+        {
+          path: '/MantenimientoCentro',
+          element: <MantenimientoCentro />
+        },
+        {
+          path: '/CreateCentro',
+          element: <CreateCentro />
+        },
+        {
+          path: '/UpdateCentro/:id',
+          element: <UpdateCentro />
+        },
+        /*  {
+           path: '/user/create',
+           element: <Signup tipoUsuario={24} />
+         },  */
       ]
     },
 
-    {
-      path: '/HistorialMaterial',
-      element: <HistorialMaterial /* idUsuario={idUsuario} */ />
-    },
-    {
-      path: '/DetalleHistorialMaterial/:id',
-      element: <DetalleHistorialMaterial />
-    },
-    {
-      path: '/HistorialCanjeosAcopio',
-      element: <HistorialCanjeosAcopio /* idUsuario={idUsuario} */ />
-    },
-    {
+
+    /*  {
+       path: '/HistorialCanjeosAcopio',
+       element: <HistorialCanjeosAcopio idUsuario={userData.id} />
+     }, */
+    /* {
       path: '/MantenimientoMaterial',
       element: <MantenimientoMaterial />
-    },
-    {
+    }, */
+    /* {
       path: '/UpdateMaterial/:id',
       element: <UpdateMaterial />
     },
     {
       path: '/CreateMaterial',
       element: <CreateMaterial />
-    },
-    {
-      path: '/MantenimientoCentro',
-      element: <MantenimientoCentro />
-    },
-    {
-      path: '/CreateCentro',
-      element: <CreateCentro />
-    },
-    {
-      path: '/UpdateCentro/:id',
-      element: <UpdateCentro />
-    },
-    {
-      path: '/CanjeoMateriales',
-      element: <CanjeoMateriales /* idUsuario={idUsuario} */ />
-    },
+    }, */
     {
       path: '/user/login',
       element: <Login />
@@ -130,7 +185,11 @@ export default function App() {
     },
     {
       path: '/user/create',
-      element: <Signup />
+      element: <Signup /* tipoUsuario={2} */ />
+    },
+    {
+      path: '/unauthorized',
+      element: <Unauthorized />
     },
   ])
 

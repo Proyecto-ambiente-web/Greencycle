@@ -16,14 +16,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 //import UsuarioService from "../../services/UsuarioService";
 //import InfoIcon from '@mui/icons-material/Info';
-import PropTypes from "prop-types";
 import { useContext } from "react";
 import { UserContext } from '../../context/UserContext';
 import MenuList from '@mui/material/MenuList';
-
-
-Header.propTypes = { setIdUsuario: PropTypes.func.isRequired };
-Header.propTypes = { setidTipoUsuario: PropTypes.number.isRequired };
 
 function Header() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -241,20 +236,22 @@ function Header() {
                             display: { xs: "none", md: "flex", marginLeft: "10px" },
                         }}
                     >
-                        <Button
-                            key="Mantenimientos"
-                            onClick={handleOpenMantenimientoMenu}
-                            sx={{
-                                my: 2,
-                                color: "white",
-                                "&:hover": {
-                                    backgroundColor: "secondary.main",
-                                },
-                                display: "block",
-                            }}
-                        >
-                            Mantenimientos
-                        </Button>
+                        {user && autorize({ allowedRoles: ['Administrador'] }) &&
+                            <Button
+                                key="Mantenimientos"
+                                onClick={handleOpenMantenimientoMenu}
+                                sx={{
+                                    my: 2,
+                                    color: "white",
+                                    "&:hover": {
+                                        backgroundColor: "secondary.main",
+                                    },
+                                    display: "block",
+                                }}
+                            >
+                                Mantenimientos
+                            </Button>
+                        }
                         <Button
                             key="Procesos"
                             onClick={handleOpenProcesosMenu}
@@ -289,7 +286,7 @@ function Header() {
 
                     <Box sx={{ flexGrow: 0 }}>
                         {userData && (
-                            <Tooltip title={userData.NombreCompleto}>
+                            <Tooltip title={userData.email}>
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                     <Avatar alt="Usuario" src="" />
                                 </IconButton>
@@ -321,10 +318,17 @@ function Header() {
                             onClose={handleCloseUserMenu}
                         >
                             {/* aquí cambia la vara */}
-                            <MenuItem key="Historial" href="/Historial/" component="a">
+                            {user && autorize({ allowedRoles: ['Cliente'] }) &&
+                            <MenuItem key="Historial" href="/HistorialCliente/" component="a">
                                 <Typography textAlign="center" >Historial</Typography>
                             </MenuItem>
-
+ }
+                            {user && autorize({ allowedRoles: ['Administrador centro acopio'] }) &&
+                                <MenuItem key="Historial" href="/HistorialCentro/" component="a">
+                                    <Typography textAlign="center" >Historial</Typography>
+                                </MenuItem>
+                            }
+                            
                             {!userData && (
                                 <MenuList>
                                     <MenuItem component='a' href='/user/login'>
@@ -333,6 +337,9 @@ function Header() {
                                     <MenuItem component='a' href='/user/create'>
                                         <Typography textAlign="center">Registrarse</Typography>
                                     </MenuItem>
+                                    {/* <MenuItem component='a' href='/user/createAdmin'>
+                                        <Typography textAlign="center">Registrar Admin</Typography>
+                                    </MenuItem> */}
                                 </MenuList>
                             )}
 
@@ -377,48 +384,51 @@ function Header() {
                             onClick={handleCloseProcesosMenu}>
                             <Typography textAlign="center">Centros de Acopio</Typography>
                         </MenuItem>
-                        <MenuItem component="a"
-                            href="/CanjeoMateriales/"
-                            onClick={handleCloseProcesosMenu}>
-                            <Typography textAlign="center">Canjeo de Materiales</Typography>
-                        </MenuItem>
+                        {user && autorize({ allowedRoles: ['Administrador centro acopio'] }) &&
+                            <MenuItem component="a"
+                                href="/CanjeoMateriales/"
+                                onClick={handleCloseProcesosMenu}>
+                                <Typography textAlign="center">Canjeo de Materiales</Typography>
+                            </MenuItem>
+                        }
                     </Menu>
                     {/**parte de los mantenimientos */}
-                    <Menu
-                        sx={{ mt: "45px" }}
-                        id="menu-appbar-mantenimiento"
-                        anchorEl={anchorElMantenimiento}
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                        open={Boolean(anchorElMantenimiento)}
-                        onClose={handleCloseMantenimientoMenu}
-                    >
-                        <MenuItem
-                            component="a"
-                            href="/MantenimientoMaterial/"
-                            onClick={handleCloseMantenimientoMenu}
+                    {user && autorize({ allowedRoles: ['Administrador'] }) &&
+                        <Menu
+                            sx={{ mt: "45px" }}
+                            id="menu-appbar-mantenimiento"
+                            anchorEl={anchorElMantenimiento}
+                            anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            open={Boolean(anchorElMantenimiento)}
+                            onClose={handleCloseMantenimientoMenu}
                         >
-                            <Typography textAlign="center">Materiales</Typography>
-                        </MenuItem>
-                        <MenuItem
-                            component="a"
-                            href="/MantenimientoCentro/"
-                            onClick={handleCloseMantenimientoMenu}
-                        >
-                            <Typography textAlign="center">Centros de Acopio</Typography>
-                        </MenuItem>
-                        <MenuItem onClick={handleCloseMantenimientoMenu}>
-                            <Typography textAlign="center">Centros</Typography>
-                        </MenuItem>
-                    </Menu>
-
+                            <MenuItem
+                                component="a"
+                                href="/MantenimientoMaterial/"
+                                onClick={handleCloseMantenimientoMenu}
+                            >
+                                <Typography textAlign="center">Materiales</Typography>
+                            </MenuItem>
+                            <MenuItem
+                                component="a"
+                                href="/MantenimientoCentro/"
+                                onClick={handleCloseMantenimientoMenu}
+                            >
+                                <Typography textAlign="center">Centros de Acopio</Typography>
+                            </MenuItem>
+                            {/* <MenuItem onClick={handleCloseMantenimientoMenu}>
+                                <Typography textAlign="center">Centros</Typography>
+                            </MenuItem> */}
+                        </Menu>
+                    }
                     <Menu
                         sx={{ mt: "45px" }}
                         id="menu-appbar-reportes"

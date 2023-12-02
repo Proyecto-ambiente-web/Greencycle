@@ -14,7 +14,7 @@ Historial.propTypes = { titulo: PropTypes.string.isRequired };
 export function Historial({imagen, url, titulo}) {
 
     return (
-        <Grid container sx={{ p: 2, display: "flex", justifyContent: "center", width: "100%" }} spacing={3} >
+        <Grid container sx={{ width: "100%"}} spacing={3} >
             {/*se usa map para recorrer los item de la base de datos */}
             <Grid item xs={12} sm={6} md={4} lg={3} xl={3} >
                 <Card style={{ width: "280px" }}>

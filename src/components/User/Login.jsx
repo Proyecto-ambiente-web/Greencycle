@@ -58,14 +58,14 @@ export function Login() {
             saveUser(response.data.results)
             toast.success('Bienvenido,',{
               duration: 4000,
-              position: 'bottom-right'
+              position: 'top-center'
             })
             return navigate('/')
           } else {
             //usuario no es valido
-            toast.success('Usuario no valido,',{
+            toast.error('Usuario no valido,',{
               duration: 4000,
-              position: 'bottom-right'
+              position: 'top-center'
             })
           }
 

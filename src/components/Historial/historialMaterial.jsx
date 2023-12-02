@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { useEffect } from "react";
 import { useState } from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { Card, CardActions, CardContent, CardHeader, Grid, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Info } from "@mui/icons-material";
@@ -11,19 +11,30 @@ import informeImagen from "../../assets/images/informe.png";
 import SavingsIcon from '@mui/icons-material/Savings';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import HomeIcon from '@mui/icons-material/Home';
-HistorialMaterial.propTypes = { idUsuario: PropTypes.string.isRequired };
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 
-export function HistorialMaterial({ idUsuario }) {
+export function HistorialMaterial() {
     const [data, setData] = useState(null);
     //Error del API
     const [error, setError] = useState("");
     //Booleano para establecer sí se ha recibido respuesta
     const [loaded, setLoaded] = useState(false);
 
+    //obtener la informacion del usuario logueado
+    //autorizar para ocultar enlaces
+    const { user, decodeToken } = useContext(UserContext)
+    const [userData, setUserData] = useState(decodeToken())
+
     useEffect(() => {
-        //Lista de peliculas del API
-        HistorialCanjeosServices.getHistorialCanjeoByIdUsuario(idUsuario)
+        setUserData(decodeToken())
+
+    }, [user])
+
+
+    useEffect(() => {
+        HistorialCanjeosServices.getHistorialCanjeoByIdUsuario(userData.id )
             .then(response => {
 
                 setData(response.data.results)
@@ -40,7 +51,7 @@ export function HistorialMaterial({ idUsuario }) {
                     }
                 }
             )
-    }, [idUsuario]);
+    }, [userData]);
 
     if (!loaded) return (
         <Box sx={{ width: '100%' }}>

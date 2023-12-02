@@ -29,8 +29,8 @@ export default function UserProvider (props) {
   const autorize = ({ allowedRoles }) => {
     const userData = decodeToken()
     if (userData && allowedRoles) {
-      console.log(userData && userData.rol && allowedRoles.includes(userData.rol.name))
-      return userData && userData.rol && allowedRoles.includes(userData.rol.name) //esto cambia segun lo configurado en el api, el token que se guardo
+      console.log(userData && userData.tipoUsuario && allowedRoles.includes(userData.tipoUsuario.descripcion))
+      return userData && userData.tipoUsuario && allowedRoles.includes(userData.tipoUsuario.descripcion) //esto cambia segun lo configurado en el api, el token que se guardo
     }
     return false
   }

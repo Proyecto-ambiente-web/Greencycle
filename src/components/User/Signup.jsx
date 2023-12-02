@@ -18,8 +18,13 @@ import { SelectCanton } from '../User/Form/SelectCantonUsuario'
 import { FormHelperText } from '@mui/material';
 import DistritoService from '../../services/DistritoService.js'
 import { SelectDistrito } from '../User/Form/SelectDistritoUsuario'
+import PropTypes from "prop-types";
 
-export function Signup() {
+/* Signup.propTypes = {
+  tipoUsuario: PropTypes.number,
+}; */
+
+export function Signup(/* {tipoUsuario} */) {
   const navigate = useNavigate()
   // Esquema de validación
   const loginSchema = yup.object({
@@ -63,7 +68,7 @@ export function Signup() {
   const onSubmit = (DataForm) => {
     try {
       console.log(DataForm)
-      setValue('idTipoUsuario', 3)
+      setValue('idTipoUsuario', 2)
       //Registrar usuario
       UsuarioService.create(DataForm)
         .then(response => {

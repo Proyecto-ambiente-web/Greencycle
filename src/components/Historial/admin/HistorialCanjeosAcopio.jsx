@@ -1,9 +1,9 @@
 import HistorialCanjeosServices from "../../../services/HistorialCanjeosServices";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { Card, CardActions, CardContent, CardHeader, Grid, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Info } from "@mui/icons-material";
@@ -12,20 +12,30 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 //import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { UserContext } from "../../../context/UserContext";
 //import KeyIcon from '@mui/icons-material/Key';
 
-HistorialCanjeosAcopio.propTypes = { idUsuario: PropTypes.string.isRequired };
 
-export function HistorialCanjeosAcopio({ idUsuario }) {
+export function HistorialCanjeosAcopio() {
     const [data, setData] = useState(null);
     //Error del API
     const [error, setError] = useState("");
     //Booleano para establecer sí se ha recibido respuesta
     const [loaded, setLoaded] = useState(false);
 
+     //obtener la informacion del usuario logueado
+    //autorizar para ocultar enlaces
+    const { user, decodeToken } = useContext(UserContext)
+    const [userData, setUserData] = useState(decodeToken())
+
+    useEffect(() => {
+        setUserData(decodeToken())
+
+    }, [user])
+
     useEffect(() => {
         //Lista de peliculas del API
-        HistorialCanjeosServices.getHistorialCanjeoXCentroAcopio(idUsuario)
+        HistorialCanjeosServices.getHistorialCanjeoXCentroAcopio(userData.id)
             .then(response => {
 
                 setData(response.data.results)
@@ -42,7 +52,7 @@ export function HistorialCanjeosAcopio({ idUsuario }) {
                     }
                 }
             )
-    }, [idUsuario]);
+    }, [userData]);
 
     if (!loaded) return (
         <Box sx={{ width: '100%' }}>
