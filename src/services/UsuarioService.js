@@ -19,12 +19,28 @@ class UsuarioService {
         return axios.get(BASE_URL + '/'+ 'usuarioClientes' + '/' + usuarioId)
     }
 
+    getClientes(tipoUserId) {
+        return axios.get(BASE_URL + '/'+ 'getClientes' + '/' + tipoUserId)
+    }
+
+    usuarioAdminCentro(id) {
+        return axios.get(BASE_URL + '/'+ 'usuarioAdminCentro' + '/' + id)
+    }
+
     loginUser(User){
         return axios.post(BASE_URL+ '/login/', User);
     }
 
     create(User){
         return axios.post(BASE_URL, User);
+    }
+
+    updateUsuario(usuario) {
+        return axios.put(BASE_URL, usuario);
+    }
+
+    updateAdminCentro(usuario) {
+        return axios.put(BASE_URL + '/'+ 'updateAdminCentro' + '/' , usuario);
     }
 }
 

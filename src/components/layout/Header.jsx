@@ -319,27 +319,25 @@ function Header() {
                         >
                             {/* aquí cambia la vara */}
                             {user && autorize({ allowedRoles: ['Cliente'] }) &&
-                            <MenuItem key="Historial" href="/HistorialCliente/" component="a">
-                                <Typography textAlign="center" >Historial</Typography>
-                            </MenuItem>
- }
+                                <MenuItem key="Historial" href="/HistorialCliente/" component="a">
+                                    <Typography textAlign="center" >Historial</Typography>
+                                </MenuItem>
+                            }
                             {user && autorize({ allowedRoles: ['Administrador centro acopio'] }) &&
                                 <MenuItem key="Historial" href="/HistorialCentro/" component="a">
                                     <Typography textAlign="center" >Historial</Typography>
                                 </MenuItem>
                             }
-                            
+
                             {!userData && (
                                 <MenuList>
                                     <MenuItem component='a' href='/user/login'>
                                         <Typography textAlign="center">Login</Typography>
                                     </MenuItem>
-                                    <MenuItem component='a' href='/user/create'>
+                                    <MenuItem component='a' href='/user/CreateCliente'>
                                         <Typography textAlign="center">Registrarse</Typography>
                                     </MenuItem>
-                                    {/* <MenuItem component='a' href='/user/createAdmin'>
-                                        <Typography textAlign="center">Registrar Admin</Typography>
-                                    </MenuItem> */}
+
                                 </MenuList>
                             )}
 
@@ -355,6 +353,15 @@ function Header() {
                                     </MenuItem>
                                 </MenuList>
                             )}
+                            {userData && (
+                                <MenuList>
+                                    <MenuItem color='secondary' component='a' href='/CambiarContraseña'>
+                                        <Typography textAlign='center'>Cambiar Contraseña</Typography>
+                                    </MenuItem>
+                                </MenuList>
+                            )}
+
+
                         </Menu>
                     </Box>
                     {/**hola es para el  */}
@@ -391,6 +398,13 @@ function Header() {
                                 <Typography textAlign="center">Canjeo de Materiales</Typography>
                             </MenuItem>
                         }
+                        {user && autorize({ allowedRoles: ['Administrador'] }) &&
+                            <MenuItem component="a"
+                                href="/Clientes/"
+                                onClick={handleCloseProcesosMenu}>
+                                <Typography textAlign="center">Lista de clientes</Typography>
+                            </MenuItem>
+                        }
                     </Menu>
                     {/**parte de los mantenimientos */}
                     {user && autorize({ allowedRoles: ['Administrador'] }) &&
@@ -424,9 +438,9 @@ function Header() {
                             >
                                 <Typography textAlign="center">Centros de Acopio</Typography>
                             </MenuItem>
-                            {/* <MenuItem onClick={handleCloseMantenimientoMenu}>
-                                <Typography textAlign="center">Centros</Typography>
-                            </MenuItem> */}
+                            <MenuItem component='a' href='/MantenimientoAdminCentro'>
+                                <Typography textAlign="center">Actualizar Admin del Centro</Typography>
+                            </MenuItem>
                         </Menu>
                     }
                     <Menu

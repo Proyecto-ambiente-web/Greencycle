@@ -14,7 +14,6 @@ import { Historial } from './components/Historial/historial';
 import { HistorialMaterial } from './components/Historial/historialMaterial';
 import { DetalleHistorialMaterial } from './components/Historial/detalleHistorialMaterial';
 import { HistorialCanjeosAcopio } from './components/Historial/admin/HistorialCanjeosAcopio';
-//import { useState, useEffect } from 'react';
 import CuponImagen from "../src/assets/images/cupones.avif";
 import material from "../src/assets/images/historialMateriales.avif";
 import centroAcopio from "../src/assets/images/centroAcopioCanjeos.png";
@@ -26,17 +25,17 @@ import { CreateCentro } from './components/Mantenimiento/MantenimientoCentroAcop
 import { UpdateCentro } from './components/Mantenimiento/MantenimientoCentroAcopio/UpdateCentro';
 import { CanjeoMateriales } from './components/Proceso/canjeoMateriales/canjeoMateriales';
 import UserProvider from './components/User/UserProvider';
-import { Auth } from './components/User/Auth'
-import { Login } from './components/User/Login'
-import { Logout } from './components/User/Logout'
-import { Signup } from './components/User/Signup'
-import { Unauthorized } from './components/User/Unauthorized'
-//import { useContext } from 'react';
-//import { UserContext } from './context/UserContext';
+import { Auth } from './components/User/Auth';
+import { Login } from './components/User/Login';
+import { Logout } from './components/User/Logout';
+import { Signup } from './components/User/Signup';
+import { Unauthorized } from './components/User/Unauthorized';
+import { CambiarContrasena } from './components/User/CambiarContra';
+import { Clientes } from './components/Admin/Clientes';
+import MantenimientoAdminCentro from './components/Mantenimiento/MantenimientoAdminCentro/TableAdminCentro';
+import { UpdateAdminCentro } from './components/Mantenimiento/MantenimientoAdminCentro/UpdateAdminCentro';
 
 export default function App() {
-
-
   const router = createBrowserRouter([
     {
       path: '/',
@@ -51,7 +50,7 @@ export default function App() {
       element: <ListMateriales />
     },
     {
-      path: '/Materialdetalle/:id', // se agrega el id porque ingresa desde otra ubicación en props
+      path: '/Materialdetalle/:id', 
       element: <Materialdetalle />
     },
     {
@@ -75,13 +74,12 @@ export default function App() {
 
                 <Historial imagen={CuponImagen} url={'/HistorialMaterial'} titulo={"Historial de Canjes de cupones"} />  {/* historial cupones cliente */}
               </div>
-
             </>
           )
         },
         {
           path: '/HistorialMaterial',
-          element: <HistorialMaterial /* idUsuario={userData.id} */ />
+          element: <HistorialMaterial />
         }
       ]
     },
@@ -100,25 +98,35 @@ export default function App() {
         },
         {
           path: '/HistorialMaterialCentro',
-          element: <HistorialMaterial /* idUsuario={userData.id} */ />
+          element: <HistorialMaterial/>
         },
         {
           path: '/HistorialCanjeosAcopio',
-          element: <HistorialCanjeosAcopio /* idUsuario={userData.id} */ />
+          element: <HistorialCanjeosAcopio />
         },
         {
           path: '/CanjeoMateriales',
-          element: <CanjeoMateriales /* idUsuario={idUsuario} */ />
+          element: <CanjeoMateriales />
         }
       ]
     },
     {
       path: '/',
       element: <Auth allowedRoles={['Administrador centro acopio', 'Cliente']} />,
-      children: [ 
+      children: [
         {
           path: '/DetalleHistorialMaterial/:id',
           element: <DetalleHistorialMaterial />
+        }
+      ]
+    },
+    {
+      path: '/',
+      element: <Auth allowedRoles={['Administrador centro acopio', 'Cliente', 'Administrador']} />,
+      children: [
+        {
+          path: '/CambiarContraseña',
+          element: <CambiarContrasena />
         }
       ]
     },
@@ -151,14 +159,24 @@ export default function App() {
           path: '/UpdateCentro/:id',
           element: <UpdateCentro />
         },
-        /*  {
-           path: '/user/create',
-           element: <Signup tipoUsuario={24} />
-         },  */
+        {
+          path: '/Clientes',
+          element: <Clientes />
+        },
+        {
+          path: '/user/CreateAdminCentro',
+          element: <Signup tipoUsuario={2} />
+        },
+        {
+          path: '/MantenimientoAdminCentro',
+          element: <MantenimientoAdminCentro />
+        },
+        {
+          path: '/UpdateAdminCentro/:id',
+          element: <UpdateAdminCentro />
+        },
       ]
     },
-
-
     /*  {
        path: '/HistorialCanjeosAcopio',
        element: <HistorialCanjeosAcopio idUsuario={userData.id} />
@@ -184,8 +202,8 @@ export default function App() {
       element: <Logout />
     },
     {
-      path: '/user/create',
-      element: <Signup /* tipoUsuario={2} */ />
+      path: '/user/CreateCliente',
+      element: <Signup tipoUsuario={3} />
     },
     {
       path: '/unauthorized',

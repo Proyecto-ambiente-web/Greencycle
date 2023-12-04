@@ -20,11 +20,11 @@ import DistritoService from '../../services/DistritoService.js'
 import { SelectDistrito } from '../User/Form/SelectDistritoUsuario'
 import PropTypes from "prop-types";
 
-/* Signup.propTypes = {
+ Signup.propTypes = {
   tipoUsuario: PropTypes.number,
-}; */
+}; 
 
-export function Signup(/* {tipoUsuario} */) {
+export function Signup( {tipoUsuario} ) {
   const navigate = useNavigate()
   // Esquema de validación
   const loginSchema = yup.object({
@@ -68,7 +68,7 @@ export function Signup(/* {tipoUsuario} */) {
   const onSubmit = (DataForm) => {
     try {
       console.log(DataForm)
-      setValue('idTipoUsuario', 2)
+      setValue('idTipoUsuario', tipoUsuario)
       //Registrar usuario
       UsuarioService.create(DataForm)
         .then(response => {
@@ -111,7 +111,6 @@ export function Signup(/* {tipoUsuario} */) {
         }
       });
   }, []);
-
 
   //Lista de canton
   const [dataCanton, setDataCanton] = useState({});
@@ -172,7 +171,7 @@ export function Signup(/* {tipoUsuario} */) {
         <Grid container spacing={1}>
           <Grid item xs={12} sm={12}>
             <Typography variant='h5' gutterBottom>
-              Registrar Usuario
+              Crear {tipoUsuario == 3? 'cliente': 'administrador del centro de acopio' }
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -332,7 +331,7 @@ export function Signup(/* {tipoUsuario} */) {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Button type='submit' variant='contained' color='secondary' sx={{ m: 1 }}>Login</Button>
+            <Button type='submit' variant='contained' color='secondary' sx={{ m: 1 }}>Registrarse</Button>
           </Grid>
         </Grid>
 

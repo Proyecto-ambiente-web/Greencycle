@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import * as React from 'react'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -16,22 +16,25 @@ import { UserContext } from '../../context/UserContext'
 import toast from 'react-hot-toast'
 import UsuarioService from '../../services/UsuarioService'
 
-export function Login() {
+export function CambiarContrasena() {
   const navigate = useNavigate()
-  const { saveUser } = useContext(UserContext) //aqui es donde llega el usuario los datos 
-  // Esquema de validación
+  
+  const { user, decodeToken } = useContext(UserContext)
+  const [userData, setUserData] = useState(decodeToken())
+
+  useEffect(() => {
+      setUserData(decodeToken())
+  }, [user])
+
   const loginSchema = yup.object({
-    email: yup.string()
-      .required('El email es requerido')
-      .email('Formato email'),
     password: yup.string()
       .required('El password es requerido')
   })
-  const { control, handleSubmit, formState: { errors } } =
+  const { control, handleSubmit, setValue,formState: { errors } } =
     useForm({
       // Valores iniciales
-      defaultValues: {
-        email: '',
+      defaultValues: { 
+        idUsuario: '',
         password: ''
       },
       // Asignación de validaciones
@@ -43,20 +46,20 @@ export function Login() {
   const [error, setError] = useState('');
   // Accion submit
   const onSubmit = (DataForm) => {
+    setValue('idUsuario', userData.id)
+
     try {
 
-      UsuarioService.loginUser(DataForm)
+      UsuarioService.updateUsuario(DataForm)
         .then(response => {
           console.log(response)
           if (
             response.data.results != null &&
             response.data.results != undefined &&
             response.data.results != 'Usuario no valido'
-
           ) {
-            //si se cumple el usuario es correcto
-            saveUser(response.data.results)
-            toast.success('Bienvenido,',{
+         
+            toast.success('Contraseña actualizada,',{
               duration: 4000,
               position: 'top-center'
             })
@@ -94,26 +97,8 @@ export function Login() {
         <Grid container spacing={1}>
           <Grid item xs={12} sm={12}>
             <Typography variant='h5' gutterBottom>
-              Login
+              Cambiar contraseña
             </Typography>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            {/* ['filled','outlined','standard']. */}
-            <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
-              <Controller
-                name='email'
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    id='email'
-                    label='Email'
-                    error={Boolean(errors.email)}
-                    helperText={errors.email ? errors.email.message : ' '}
-                  />
-                )}
-              />
-            </FormControl>
           </Grid>
           <Grid item xs={12} sm={4}>
             <FormControl variant='standard' fullWidth sx={{ m: 1 }}>
@@ -134,7 +119,7 @@ export function Login() {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Button type='submit' variant='contained' color='secondary' sx={{ m: 1 }}>Login</Button>
+            <Button type='submit' variant='contained' color='secondary' sx={{ m: 1 }}>Cambiar</Button>
           </Grid>
         </Grid>
       </form>
