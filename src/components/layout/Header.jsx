@@ -405,6 +405,13 @@ function Header() {
                                 <Typography textAlign="center">Lista de clientes</Typography>
                             </MenuItem>
                         }
+                        {user && autorize({ allowedRoles: ['Cliente'] }) &&
+                            <MenuItem component="a"
+                                href="/TablaMonedas/"
+                                onClick={handleCloseProcesosMenu}>
+                                <Typography textAlign="center">Billetera</Typography>
+                            </MenuItem>
+                        }
                     </Menu>
                     {/**parte de los mantenimientos */}
                     {user && autorize({ allowedRoles: ['Administrador'] }) &&

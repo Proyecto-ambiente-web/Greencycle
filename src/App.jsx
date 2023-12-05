@@ -34,6 +34,8 @@ import { CambiarContrasena } from './components/User/CambiarContra';
 import { Clientes } from './components/Admin/Clientes';
 import MantenimientoAdminCentro from './components/Mantenimiento/MantenimientoAdminCentro/TableAdminCentro';
 import { UpdateAdminCentro } from './components/Mantenimiento/MantenimientoAdminCentro/UpdateAdminCentro';
+import TablaMonedas from './components/Proceso/Billetera/Monedas';
+
 
 export default function App() {
   const router = createBrowserRouter([
@@ -80,6 +82,10 @@ export default function App() {
         {
           path: '/HistorialMaterial',
           element: <HistorialMaterial />
+        },
+        {
+          path: '/TablaMonedas',
+          element: <TablaMonedas />
         }
       ]
     },

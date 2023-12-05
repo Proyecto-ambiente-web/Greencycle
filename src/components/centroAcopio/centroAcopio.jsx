@@ -27,7 +27,7 @@ export function CentrosDeAcopio() {
 
     useEffect(() => {
         //Lista de peliculas del API
-        CentroAcopioServices.getCentrosAcopio()
+        CentroAcopioServices.getCentrosActivos(1)
             .then(response => {
                 setData(response.data.results)
                 setError(response.error)

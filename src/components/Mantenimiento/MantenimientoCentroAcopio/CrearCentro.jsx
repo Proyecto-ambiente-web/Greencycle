@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { FormHelperText } from '@mui/material';
+import { FormHelperText, FormLabel, RadioGroup } from '@mui/material';
 import { useForm, Controller, /* useFieldArray */ } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -14,7 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import UsuarioService from '../../../services/UsuarioService.js';
 import CantonService from '../../../services/CantonService.js';
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { SelectProvincia } from './Form/SelectProvincia';
 import { SelectCanton } from './Form/SelectCanton.jsx';
 import CentroAcopioServices from '../../../services/CentroAcopioServices';
@@ -22,10 +22,20 @@ import MaterialService from '../../../services/MaterialService.js';
 import ProvinciaService from '../../../services/ProvinciaService.js';
 import { SelectAdmin } from './Form/SelectAdmin.jsx';
 import { SelectMateriales } from './Form/SelectMateriales.jsx';
+import * as React from 'react';
+import Radio from '@mui/material/Radio';
+import FormControlLabel from '@mui/material/FormControlLabel';
 //https://www.npmjs.com/package/@hookform/resolvers
 
 export function CreateCentro() {
     const navigate = useNavigate();
+
+    const [valor, setValor] = React.useState(1);
+
+    const handleChange = (event) => {
+        setValor(event.target.value);
+        setValue('Estado', event.target.value)
+    };
 
     const CentroAcopioSchema = yup.object({
         nombre: yup.string().required("El nombre del centro es requerido"),
@@ -33,32 +43,33 @@ export function CreateCentro() {
         telefono: yup.string().required("El teléfono es requerido"),
         horario: yup.string().required("El horario es requerido"),
         administrador: yup
-          .string()
-          .required("Se debe seleccionar una administrador para el centro"),
+            .string()
+            .required("Se debe seleccionar una administrador para el centro"),
         Provincia: yup.string().required("Se debe seleccionar una provincia"),
         Canton: yup.string().required("Se debe seleccionar un cantón"),
         materiales: yup.array().min(1, "Se debe seleccionar mínimo un material"),
-      });
-    
-      const {
+    });
+
+    const {
         control,
         handleSubmit,
         setValue,
         formState: { errors },
-      } = useForm({
+    } = useForm({
         defaultValues: {
-          nombre: "",
-          Provincia: "",
-          Canton: "",
-          direccion: "",
-          telefono: "",
-          horario: "",
-          administrador: "",
-          materiales: [],
+            nombre: "",
+            Provincia: "",
+            Canton: "",
+            direccion: "",
+            telefono: "",
+            horario: "",
+            administrador: "",
+            materiales: [],
+            Estado: 1,
         },
         // Asignación de validaciones
         resolver: yupResolver(CentroAcopioSchema),
-      });
+    });
 
     const [error, setError] = useState('');
 
@@ -76,12 +87,12 @@ export function CreateCentro() {
                         setError(response.error);
                         //Respuesta al usuario de creación
                         //if (response.data.results != null) {
-                            toast.success(response.data.results, {
-                                duration: 4000,
-                                position: 'top-center',
-                              });
-                            // Redireccion a la tabla
-                            return navigate('/MantenimientoCentro');
+                        toast.success(response.data.results, {
+                            duration: 4000,
+                            position: 'top-center',
+                        });
+                        // Redireccion a la tabla
+                        return navigate('/MantenimientoCentro');
                         //}
                     })
                     .catch((error) => {
@@ -276,7 +287,7 @@ export function CreateCentro() {
                                     name='Provincia'
                                     control={control}
                                     render={({ field }) => (
-                                        <SelectProvincia 
+                                        <SelectProvincia
                                             field={field}
                                             data={dataProvincia}
                                             error={Boolean(errors.Provincia)}
@@ -380,6 +391,22 @@ export function CreateCentro() {
                             </FormHelperText>
                         </FormControl>
                     </Grid>
+
+                    <Grid item xs={12} sm={4} style={{ paddingLeft: "5%" }}>
+                        <FormControl>
+                            <FormLabel id="demo-controlled-radio-buttons-group">Estado</FormLabel>
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="Estado"
+                                value={valor}
+                                onChange={handleChange}
+                            >
+                                <FormControlLabel value={1} control={<Radio />} label="Activado" />
+                                <FormControlLabel value={0} control={<Radio />} label="Desactivado" />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+
                     <Grid item xs={12} sm={12}>
                         <Button
                             type='submit'

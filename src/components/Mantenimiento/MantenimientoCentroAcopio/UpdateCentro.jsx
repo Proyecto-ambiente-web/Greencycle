@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { FormHelperText } from '@mui/material';
+import { FormHelperText, FormLabel, RadioGroup  } from '@mui/material';
 import { useForm, Controller, /* useFieldArray */ } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -19,6 +19,8 @@ import { SelectMateriales } from './Form/SelectMateriales';
 import { SelectAdmin } from './Form/SelectAdmin';
 import { SelectCanton } from './Form/SelectCanton';
 import { SelectProvincia } from './Form/SelectProvincia';
+import Radio from '@mui/material/Radio';
+import FormControlLabel from '@mui/material/FormControlLabel';
 //https://www.npmjs.com/package/@hookform/resolvers
 
 export function UpdateCentro() {
@@ -28,6 +30,12 @@ export function UpdateCentro() {
     const id = routeParams.id || null;
 
     const [values, setValores] = useState(null);
+    const [valor, setValor] = useState(1);
+
+    const handleChange = (event) => {
+        setValor(event.target.value);
+        setValue('Estado', event.target.value)
+    };
 
     useEffect(() => {
         if (id != undefined && !isNaN(Number(id))) {
@@ -36,6 +44,7 @@ export function UpdateCentro() {
                     setIdProvincia(response.data.results.Provincia)
                     setValores('Provincia', response.data.results.Provincia)
                     setValores('Canton', response.data.results.Canton)
+                    setValor(response.data.results.estado)
 
                     console.log(response);
                     setValores(response.data.results);
@@ -90,6 +99,7 @@ export function UpdateCentro() {
             horario: '',
             administrador: [],
             materiales: [],
+            Estado: 1
         },
         //Valores a precargar en el formulario
         values,
@@ -260,7 +270,7 @@ export function UpdateCentro() {
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={12}>
                         <Typography variant='h5' gutterBottom>
-                            Crear centro de acopio
+                            Actualizar centro de acopio
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={4}>
@@ -456,6 +466,20 @@ export function UpdateCentro() {
                             <FormHelperText sx={{ color: '#d32f2f' }}>
                                 {errors.materiales ? errors.materiales.message : ' '}
                             </FormHelperText>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={4} style={{ paddingLeft: "5%" }}>
+                        <FormControl>
+                            <FormLabel id="demo-controlled-radio-buttons-group">Estado</FormLabel>
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="Estado"
+                                value={valor}
+                                onChange={handleChange}
+                            >
+                                <FormControlLabel value={1} control={<Radio />} label="Activado" />
+                                <FormControlLabel value={0} control={<Radio />} label="Desactivado" />
+                            </RadioGroup>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={12}>
