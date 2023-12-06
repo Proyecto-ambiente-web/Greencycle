@@ -406,11 +406,13 @@ function Header() {
                             </MenuItem>
                         }
                         {user && autorize({ allowedRoles: ['Cliente'] }) &&
-                            <MenuItem component="a"
-                                href="/TablaMonedas/"
-                                onClick={handleCloseProcesosMenu}>
-                                <Typography textAlign="center">Billetera</Typography>
-                            </MenuItem>
+                            
+                                <MenuItem component="a"
+                                    href="/TablaMonedas/"
+                                    onClick={handleCloseProcesosMenu}>
+                                    <Typography textAlign="center">Billetera</Typography>
+                                </MenuItem>
+                               
                         }
                     </Menu>
                     {/**parte de los mantenimientos */}
