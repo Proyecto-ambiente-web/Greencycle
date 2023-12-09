@@ -35,6 +35,9 @@ import { Clientes } from './components/Admin/Clientes';
 import MantenimientoAdminCentro from './components/Mantenimiento/MantenimientoAdminCentro/TableAdminCentro';
 import { UpdateAdminCentro } from './components/Mantenimiento/MantenimientoAdminCentro/UpdateAdminCentro';
 import TablaMonedas from './components/Proceso/Billetera/Monedas';
+import {ReporteXAdmin} from './components/Reportes/reportesXAdminCentro';
+import {ReporteXAdminAplicacion} from './components/Reportes/reportesAdmin';
+
 
 
 export default function App() {
@@ -113,6 +116,10 @@ export default function App() {
         {
           path: '/CanjeoMateriales',
           element: <CanjeoMateriales />
+        },
+        {
+          path: '/ReporteXAdmin',
+          element: <ReporteXAdmin />
         }
       ]
     },
@@ -180,6 +187,10 @@ export default function App() {
         {
           path: '/UpdateAdminCentro/:id',
           element: <UpdateAdminCentro />
+        },
+        {
+          path: '/ReporteXAdminAplicacion',
+          element: <ReporteXAdminAplicacion />
         },
       ]
     },

@@ -406,13 +406,13 @@ function Header() {
                             </MenuItem>
                         }
                         {user && autorize({ allowedRoles: ['Cliente'] }) &&
-                            
-                                <MenuItem component="a"
-                                    href="/TablaMonedas/"
-                                    onClick={handleCloseProcesosMenu}>
-                                    <Typography textAlign="center">Billetera</Typography>
-                                </MenuItem>
-                               
+
+                            <MenuItem component="a"
+                                href="/TablaMonedas/"
+                                onClick={handleCloseProcesosMenu}>
+                                <Typography textAlign="center">Billetera</Typography>
+                            </MenuItem>
+
                         }
                     </Menu>
                     {/**parte de los mantenimientos */}
@@ -452,34 +452,45 @@ function Header() {
                             </MenuItem>
                         </Menu>
                     }
-                    <Menu
-                        sx={{ mt: "45px" }}
-                        id="menu-appbar-reportes"
-                        anchorEl={anchorElReporte}
-                        anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                        }}
-                        open={Boolean(anchorElReporte)}
-                        onClose={handleCloseReportesMenu}
-                    >
-                        <MenuItem onClick={handleCloseReportesMenu}>
-                            <Typography textAlign="center">Reporte 1</Typography>
-                        </MenuItem>
-                        <MenuItem onClick={handleCloseReportesMenu}>
-                            <Typography textAlign="center">Reporte 2</Typography>
-                        </MenuItem>
-                        <MenuItem onClick={handleCloseReportesMenu}>
-                            <Typography textAlign="center">Reporte 3</Typography>
-                        </MenuItem>
-                    </Menu>
+                    {user && autorize({ allowedRoles: ["Administrador centro acopio", "Administrador"] }) &&
+                        <Menu
+                            sx={{ mt: "45px" }}
+                            id="menu-appbar-reportes"
+                            anchorEl={anchorElReporte}
+                            anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                            open={Boolean(anchorElReporte)}
+                            onClose={handleCloseReportesMenu}
+                        >
+                            {user && autorize({ allowedRoles: ['Administrador centro acopio'] }) &&
+                                <MenuList>
+                                    <MenuItem component='a' href='/ReporteXAdmin'>
+                                        <Typography textAlign="center">Reportes del centro</Typography>
+                                    </MenuItem>
 
 
+                                </MenuList>
+                            }
+
+                            {user && autorize({ allowedRoles: ['Administrador'] }) &&
+                                <MenuItem component='a' href='/ReporteXAdminAplicacion'>
+                                    <Typography textAlign="center">Reporte Administración</Typography>
+                                </MenuItem>
+
+                            }
+                            <MenuItem onClick={handleCloseReportesMenu}>
+                                <Typography textAlign="center">Reporte 3</Typography>
+                            </MenuItem>
+                        </Menu>
+
+                    }
                 </Toolbar>
             </Container>
         </AppBar>

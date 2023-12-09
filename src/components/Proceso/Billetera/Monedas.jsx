@@ -61,7 +61,7 @@ export default function TablaMonedas() {
                         <Table sx={{ minWidth: 928, border: "solid 2px" }} aria-label="simple table">
                             <TableHead>
                                 <TableRow sx={{ backgroundColor: 'primary.main' }}>
-                                    <TableCell sx={{ color: 'primary.contrastText' }}>Ecomonedas disponibles</TableCell>
+                                    <TableCell sx={{ color: 'primary.contrastText' }} align="center">Ecomonedas disponibles</TableCell>
                                     <TableCell sx={{ color: 'primary.contrastText' }} align="center">Ecomonedas canjeadas</TableCell>
                                     <TableCell sx={{ color: 'primary.contrastText' }} align="center">Ecomonedas recibidas</TableCell>
                                 </TableRow>
