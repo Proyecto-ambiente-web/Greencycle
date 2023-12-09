@@ -37,6 +37,7 @@ import { UpdateAdminCentro } from './components/Mantenimiento/MantenimientoAdmin
 import TablaMonedas from './components/Proceso/Billetera/Monedas';
 import {ReporteXAdmin} from './components/Reportes/reportesXAdminCentro';
 import {ReporteXAdminAplicacion} from './components/Reportes/reportesAdmin';
+import TablaCupones from './components/Mantenimiento/MantenimientoCupones/tablaCupones';
 
 
 
@@ -191,6 +192,10 @@ export default function App() {
         {
           path: '/ReporteXAdminAplicacion',
           element: <ReporteXAdminAplicacion />
+        },
+        {
+          path: '/TablaCupones',
+          element: <TablaCupones />
         },
       ]
     },

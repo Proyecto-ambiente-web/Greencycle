@@ -399,11 +399,16 @@ function Header() {
                             </MenuItem>
                         }
                         {user && autorize({ allowedRoles: ['Administrador'] }) &&
-                            <MenuItem component="a"
-                                href="/Clientes/"
-                                onClick={handleCloseProcesosMenu}>
-                                <Typography textAlign="center">Lista de clientes</Typography>
-                            </MenuItem>
+                            <MenuList>
+                                <MenuItem component="a"
+                                    href="/Clientes/"
+                                    onClick={handleCloseProcesosMenu}>
+                                    <Typography textAlign="center">Lista de clientes</Typography>
+                                </MenuItem>
+
+
+                            </MenuList>
+
                         }
                         {user && autorize({ allowedRoles: ['Cliente'] }) &&
 
@@ -449,6 +454,11 @@ function Header() {
                             </MenuItem>
                             <MenuItem component='a' href='/MantenimientoAdminCentro'>
                                 <Typography textAlign="center">Actualizar Admin del Centro</Typography>
+                            </MenuItem>
+                            <MenuItem component="a"
+                                href="/TablaCupones/"
+                                onClick={handleCloseProcesosMenu}>
+                                <Typography textAlign="center">Cupones</Typography>
                             </MenuItem>
                         </Menu>
                     }
