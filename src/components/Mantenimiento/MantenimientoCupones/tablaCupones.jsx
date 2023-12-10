@@ -103,7 +103,7 @@ function TableMaterialHead(props) {
       <TableRow>
         <TableCell>
           <Tooltip title="Crear">
-            <IconButton component={Link} to="/CreateCentro">
+            <IconButton component={Link} to="/CreateCupones">
               {" "}
               {/* Crear material*/}
               <AddIcon />
@@ -146,7 +146,7 @@ function TableMaterialToolbar(props) {
   const { idSelected } = props;
   const navigate = useNavigate();
   const update = () => {
-    return navigate(`/UpdateCentro/${idSelected}`); //Ruta para actualizar material
+    return navigate(`/UpdateCupones/${idSelected}`); //Ruta para actualizar material
   };
   return (
     <Toolbar

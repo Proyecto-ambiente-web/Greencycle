@@ -38,7 +38,8 @@ import TablaMonedas from './components/Proceso/Billetera/Monedas';
 import {ReporteXAdmin} from './components/Reportes/reportesXAdminCentro';
 import {ReporteXAdminAplicacion} from './components/Reportes/reportesAdmin';
 import TablaCupones from './components/Mantenimiento/MantenimientoCupones/tablaCupones';
-
+import { CreateCupones } from './components/Mantenimiento/MantenimientoCupones/CrearCupones';
+import { UpdateCupones } from './components/Mantenimiento/MantenimientoCupones/UpdateCupones';
 
 
 export default function App() {
@@ -196,6 +197,14 @@ export default function App() {
         {
           path: '/TablaCupones',
           element: <TablaCupones />
+        },
+        {
+          path: '/CreateCupones',
+          element: <CreateCupones />
+        },
+        {
+          path: '/UpdateCupones/:id',
+          element: <UpdateCupones />
         },
       ]
     },

@@ -3,7 +3,8 @@ const BASE_URL = import.meta.env.VITE_BASE_URL + "Reportes";
 
 class ReportesService {
 
-    getCantCanjesMesActual(reporte) {
+  //Admin de centro de acopio
+  getCantCanjesMesActual(reporte) {
     return axios.get(BASE_URL + "/" + "getCantCanjesMesActual" + "/" + reporte);
   }
 
@@ -15,12 +16,18 @@ class ReportesService {
     return axios.get(BASE_URL + "/" + "getTotalGenerado" + "/" + reporte);
   }
 
-  getTotalCanjesMesActual(reporte) {
-    return axios.get(BASE_URL + "/" + "getTotalCanjesMesActual" + "/" + reporte);
-  }
-
+  //Admin del sistema
   getTotalMonedasXCentro(reporte) {
     return axios.get(BASE_URL + "/" + "getTotalMonedasXCentro" + "/" + reporte);
   }
+
+  getCantTotalCanjesDelMes(reporte) {
+    return axios.get(BASE_URL + "/" + "getCantTotalCanjesDelMes" + "/" + reporte);
+  }
+
+  getEstadisticaMonedasXcentroAnnioActual(reporte) {
+    return axios.get(BASE_URL + "/" + "getEstadisticaMonedasXcentroAnnioActual" + "/" + reporte);
+  }
 }
+
 export default new ReportesService();

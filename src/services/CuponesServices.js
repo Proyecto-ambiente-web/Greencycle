@@ -7,5 +7,17 @@ class CuponesService {
         return axios.get(BASE_URL);
     }
 
+    getCuponById(CuponId) {
+        return axios.get(BASE_URL + '/' + CuponId)
+    }
+
+    crearCupon(cupon) {
+        return axios.post(BASE_URL, cupon);
+      }
+
+      updateCupon(cupon) {
+        return axios.put(BASE_URL, cupon);
+    }
+
 }
 export default new CuponesService();

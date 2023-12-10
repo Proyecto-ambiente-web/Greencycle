@@ -109,8 +109,7 @@ export function ReporteXAdmin() {
             {!loaded && <div>Cargando...</div>}
             {dataCanjesMensuales && (
                 <>
-                    <br />
-                    <h2>Cantidad de canjes realizados en el mes</h2>
+                    <h2 style={{ textAlign: 'center', margin: '50px 0 20px' }}>Cantidad de canjes realizados en el mes</h2>
                     <ResponsiveContainer width="100%" height={500} key={1}>
                         <BarChart data={dataCanjesMensuales}>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -123,6 +122,7 @@ export function ReporteXAdmin() {
                                 fill="#82ca9d"
                                 stroke="#000000"
                                 strokeWidth={1}
+                                barSize={30}
                             />
                         </BarChart>
                     </ResponsiveContainer>
@@ -130,9 +130,7 @@ export function ReporteXAdmin() {
             )}
             {dataCanjesAnnio && (
                 <>
-                    <hr />
-                    <br />
-                    <h2>Canjes agrupados por materiales en el año actual</h2>
+                    <h2 style={{ textAlign: 'center', margin: '70px 0 20px' }}>Canjes agrupados por materiales en el año actual</h2>
                     <ResponsiveContainer width="100%" height={500} key={1}>
                         <BarChart data={dataCanjesAnnio}>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -140,12 +138,12 @@ export function ReporteXAdmin() {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="Material" fill="#8884d8" />
                             <Bar
                                 dataKey="Cantidad"
-                                fill="#82ca9d"
+                                fill="#65d3da"
                                 stroke="#000000"
                                 strokeWidth={1}
+                                barSize={30}
                             />
                         </BarChart>
                     </ResponsiveContainer>
@@ -153,22 +151,20 @@ export function ReporteXAdmin() {
             )}
             {dataTotalGenerado && (
                 <>
-                    <hr />
-                    <br />
-                    <h2>Total de eco-monedas generadas</h2>
-                    <ResponsiveContainer width="100%" height={500} key={1}>
+                    <h2 style={{ textAlign: 'center', margin: '70px 0 20px' }}>Total de eco-monedas generadas</h2>
+                    <ResponsiveContainer width="100%" height={500} key={1} style={{ marginBottom: '50px' }}>
                         <BarChart data={dataTotalGenerado}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="Centro" />
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                             <Bar dataKey="Centro" fill="#8884d8" />
                             <Bar
                                 dataKey="Total"
-                                fill="#82ca9d"
+                                fill="#cbe989"
                                 stroke="#000000"
                                 strokeWidth={1}
+                                barSize={30}
                             />
                         </BarChart>
                     </ResponsiveContainer>
