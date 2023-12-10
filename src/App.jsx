@@ -40,6 +40,7 @@ import {ReporteXAdminAplicacion} from './components/Reportes/reportesAdmin';
 import TablaCupones from './components/Mantenimiento/MantenimientoCupones/tablaCupones';
 import { CreateCupones } from './components/Mantenimiento/MantenimientoCupones/CrearCupones';
 import { UpdateCupones } from './components/Mantenimiento/MantenimientoCupones/UpdateCupones';
+import { CanjeCupones } from './components/Cupones/CanjeCupones';
 
 
 export default function App() {
@@ -48,10 +49,10 @@ export default function App() {
       path: '/',
       element: <Home />
     },
-    /* {
-       path:'*',
-       element: <PageNotFound />
-     }, */
+    //  {
+    //    path:'*',
+    //    element: <PageNotFound />
+    //  }, 
     {
       path: '/Material',
       element: <ListMateriales />
@@ -91,6 +92,10 @@ export default function App() {
         {
           path: '/TablaMonedas',
           element: <TablaMonedas />
+        },
+        {
+          path: '/CanjeCupones',
+          element: <CanjeCupones />
         }
       ]
     },

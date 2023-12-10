@@ -15,6 +15,10 @@ class UsuarioService {
         return axios.get(BASE_URL + '/'+ 'usuarioAdmin' + '/' + usuarioId)
     }
 
+    getUsuarioBilletera(usuarioId) {
+        return axios.get(BASE_URL + '/'+ 'getUsuarioBilletera' + '/' + usuarioId)
+    }
+
     usuariosClientes(usuarioId) {
         return axios.get(BASE_URL + '/'+ 'usuarioClientes' + '/' + usuarioId)
     }

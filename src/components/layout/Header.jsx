@@ -77,41 +77,6 @@ function Header() {
 
     }, [user])
 
-
-    /* //Resultado de consumo del API, respuesta
-    const [data, setData] = useState(null);
-    //Error del API
-    const [error, setError] = useState("");
-    //Booleano para establecer sí se ha recibido respuesta
-    const [loaded, setLoaded] = useState(false);
-
-    useEffect(() => {
-        //Lista de peliculas del API
-        UsuarioService.getUsuarioById(6)
-            .then(response => {
-                setData(response.data.results)
-                setError(response.error)
-                setLoaded(true)
-                setIdUsuario(response.data.results.id);
-                setidTipoUsuario(response.data.results.idTipoUsuario);
-                console.log(setIdUsuario)
-            })
-            .catch(
-                error => {
-                    if (error instanceof SyntaxError) {
-                        console.log(error)
-                        setError(error)
-                        setLoaded(false)
-                        throw new Error("Respuesta no válida del servidor")
-                    }
-                }
-            )
-    }, [setIdUsuario, setidTipoUsuario]);
-
-    if (!loaded) return <InfoIcon />
-    if (error) return <p>Error: {error.message}</p>
- */
-
     return (
         <AppBar position="static" sx={{ backgroundColor: "primary.main" }}>
             <Container maxWidth="xl">
@@ -332,7 +297,7 @@ function Header() {
                             {!userData && (
                                 <MenuList>
                                     <MenuItem component='a' href='/user/login'>
-                                        <Typography textAlign="center">Login</Typography>
+                                        <Typography textAlign="center">Iniciar Sesión</Typography>
                                     </MenuItem>
                                     <MenuItem component='a' href='/user/CreateCliente'>
                                         <Typography textAlign="center">Registrarse</Typography>
@@ -349,7 +314,7 @@ function Header() {
                                         </Typography>
                                     </MenuItem>
                                     <MenuItem color='secondary' component='a' href='/user/logout'>
-                                        <Typography textAlign='center'>Logout</Typography>
+                                        <Typography textAlign='center'>Cerrar Sesión</Typography>
                                     </MenuItem>
                                 </MenuList>
                             )}
@@ -411,12 +376,20 @@ function Header() {
 
                         }
                         {user && autorize({ allowedRoles: ['Cliente'] }) &&
+                            <MenuList>
+                                <MenuItem component="a"
+                                    href="/TablaMonedas/"
+                                    onClick={handleCloseProcesosMenu}>
+                                    <Typography textAlign="center">Billetera</Typography>
+                                </MenuItem>
 
-                            <MenuItem component="a"
-                                href="/TablaMonedas/"
-                                onClick={handleCloseProcesosMenu}>
-                                <Typography textAlign="center">Billetera</Typography>
-                            </MenuItem>
+                                <MenuItem component="a"
+                                    href="/CanjeCupones/"
+                                    onClick={handleCloseProcesosMenu}>
+                                    <Typography textAlign="center">Canjeo de cupones</Typography>
+                                </MenuItem>
+                            </MenuList>
+
 
                         }
                     </Menu>
