@@ -2,8 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Box, FormControl, Button, Grid, LinearProgress } from "@mui/material";
 //import { SelectCupones } from "./Form/SelectCupones";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from 'yup';
 import UsuarioService from "../../services/UsuarioService";
 import { FormHelperText } from '@mui/material';
 import CuponesServices from "../../services/CuponesServices";
@@ -55,11 +53,6 @@ export function CanjeCupones() {
             )
     }, [userData]);
 
-    // Esquema de validación
-    const CanjeoSchema = yup.object({
-        NombreCompleto: yup.string()
-            .required("Se requiere seleccionar un cliente"),
-    });
 
     const {
         control,
@@ -69,7 +62,7 @@ export function CanjeCupones() {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            idUsuario: '',
+            idUsuario: userData.id,
             cupones: [
                 {
                     cupon_id: '',
@@ -81,8 +74,6 @@ export function CanjeCupones() {
             total: 0
         },
 
-        // Asignación de validaciones
-        resolver: yupResolver(CanjeoSchema),
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -107,7 +98,7 @@ export function CanjeCupones() {
         let total = 0;
         let tabla = '';
         let bandera = false;
-    
+
         limpiarDetalle();
         valores.cupones.map((item) => {
             if (item.cantidad && item.cantidad != 0 && !isNaN(item.cantidad)) {
@@ -243,7 +234,7 @@ export function CanjeCupones() {
                 return;
             }
 
-            if (ecomonedasRequeridas > parseInt(dataUser.disponible) 
+            if (ecomonedasRequeridas > parseInt(dataUser.disponible)
                 || parseInt(DataForm.total) > parseInt(dataUser.disponible)) {
 
                 toast.error("Ecomonedas insuficientes", {
@@ -292,30 +283,29 @@ export function CanjeCupones() {
                 return;
             }
 
-            if (CanjeoSchema.isValid()) {
-                //Crear canjeo
-                CuponUsuarioService.crearCuponUsuario(DataForm)
-                    .then((response) => {
-                        console.log(response);
-                        setError(response.error);
-                        //Respuesta al usuario de creación
-                        if (response.data.results != null) {
-                            toast.success(response.data.results, {
-                                duration: 4000,
-                                position: 'top-center',
-                            });
 
-                            return navigate(`/`);
-                        }
-                    })
-                    .catch((error) => {
-                        if (error instanceof SyntaxError) {
-                            console.log(error);
-                            setError(error);
-                            throw new Error('Respuesta no válida del servidor');
-                        }
-                    });
-            }
+            //Crear canjeo
+            CuponUsuarioService.crearCuponUsuario(DataForm)
+                .then((response) => {
+                    console.log(response);
+                    setError(response.error);
+                    //Respuesta al usuario de creación
+                    //if (response.data.results != null) {
+                        toast.success("Compra realizada", {
+                            duration: 4000,
+                            position: 'top-center',
+                        });
+
+                        return navigate('/HistorialCliente');
+                    //}
+                })
+                .catch((error) => {
+                    if (error instanceof SyntaxError) {
+                        console.log(error);
+                        setError(error);
+                        throw new Error('Respuesta no válida del servidor');
+                    }
+                });
         } catch (e) {
             //Capturar error
         }
@@ -358,7 +348,7 @@ export function CanjeCupones() {
                         <div>
                             <h1>Ecomonedas disponibles</h1>
                             <p style={{ textAlign: 'right' }}>{dataUser.disponible}</p>
-                            
+
                             <h1>Ecomonedas requeridas</h1>
                             <p style={{ textAlign: 'right' }}>{ecomonedasRequeridas}</p>
                         </div>
