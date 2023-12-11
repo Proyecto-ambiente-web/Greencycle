@@ -41,6 +41,8 @@ import TablaCupones from './components/Mantenimiento/MantenimientoCupones/tablaC
 import { CreateCupones } from './components/Mantenimiento/MantenimientoCupones/CrearCupones';
 import { UpdateCupones } from './components/Mantenimiento/MantenimientoCupones/UpdateCupones';
 import { CanjeCupones } from './components/Cupones/CanjeCupones';
+import { HistorialCupones } from './components/Historial/HistorialCupones';
+import { DetalleHistorialCupones } from './components/Historial/detalleHistorialCupones';
 
 
 export default function App() {
@@ -80,7 +82,7 @@ export default function App() {
               <div style={{ display: 'flex', width: '100%', paddingLeft: '300px' }}>
                 <Historial imagen={material} url={'/HistorialMaterial'} titulo={"Historial de Canjes de Materiales"} /> {/* historial material cliente */}
 
-                <Historial imagen={CuponImagen} url={'/HistorialMaterial'} titulo={"Historial de Canjes de cupones"} />  {/* historial cupones cliente */}
+                <Historial imagen={CuponImagen} url={'/HistorialCupones'} titulo={"Historial de Canjes de cupones"} />  {/* historial cupones cliente */}
               </div>
             </>
           )
@@ -96,6 +98,14 @@ export default function App() {
         {
           path: '/CanjeCupones',
           element: <CanjeCupones />
+        },
+        {
+          path: '/HistorialCupones',
+          element: <HistorialCupones />
+        },
+        {
+          path: '/DetalleHistorialCupones',
+          element: <DetalleHistorialCupones />
         }
       ]
     },

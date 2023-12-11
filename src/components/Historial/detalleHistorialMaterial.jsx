@@ -86,7 +86,7 @@ export function DetalleHistorialMaterial() {
                                     <TableRow
                                         key={item.id}
                                     >
-                                        <TableCell component="th" scope="row" sx={{ borderRight: "solid 2px" }}>
+                                        <TableCell component="th" scope="row" sx={{ borderRight: "solid 2px", backgroundColor:"white" }}>
                                             {item.descripcion}
                                         </TableCell>
                                         <TableCell align="center" sx={{ borderRight: "solid 2px" }}>{item.precio}</TableCell>

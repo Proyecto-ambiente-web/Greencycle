@@ -6,5 +6,9 @@ class CuponUsuarioService {
     crearCuponUsuario(param) {
         return axios.post(BASE_URL, param);
     }
+
+    getCuponByIdUsuario(CuponId) {
+        return axios.get(BASE_URL + '/' +'getCuponByIdUsuario' + '/' + CuponId)
+    }
 }
 export default new CuponUsuarioService();

@@ -147,18 +147,18 @@
     text-align: left;
 }
 
-table caption {
+#table-container table caption {
     margin: 0px 0px 10px 0px;
 }
 
-th {
+#table-head th {
     background-color: #101820;
     color: white;
     text-align: left;
 }
 
-th,
-td {
+#table-head th,
+#table-body td {
     border: solid 1px silver;
     padding: 5px;
 }
