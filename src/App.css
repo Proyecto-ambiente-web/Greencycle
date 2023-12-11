@@ -122,10 +122,13 @@
 
 #table-container {
     width: 100%;
-    border-collapse: collapse;
     margin-bottom: 20px;
     display: grid;
     place-items: center;
+}
+
+#table-container table {
+    border-collapse: collapse;
 }
 
 #table-head {
@@ -144,11 +147,27 @@
     text-align: left;
 }
 
+table caption {
+    margin: 0px 0px 10px 0px;
+}
+
+th {
+    background-color: #101820;
+    color: white;
+    text-align: left;
+}
+
+th,
+td {
+    border: solid 1px silver;
+    padding: 5px;
+}
+
 #table-body {
     text-align: center;
 }
 
-.containerTotal{
+.containerTotal {
     width: 100%;
     height: auto;
     box-sizing: border-box;

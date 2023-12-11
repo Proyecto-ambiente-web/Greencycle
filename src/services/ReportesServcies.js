@@ -28,6 +28,14 @@ class ReportesService {
   getEstadisticaMonedasXcentroAnnioActual(reporte) {
     return axios.get(BASE_URL + "/" + "getEstadisticaMonedasXcentroAnnioActual" + "/" + reporte);
   }
+
+  getCantCanjesCuponesAnnioActual(reporte) {
+    return axios.get(BASE_URL + "/" + "getCantCanjesCuponesAnnioActual" + "/" + reporte);
+  }
+
+  getTotalEcomonedasUtilizadasEnAnioActual(reporte) {
+    return axios.get(BASE_URL + "/" + "getTotalEcomonedasUtilizadasEnAnioActual" + "/" + reporte);
+  }
 }
 
 export default new ReportesService();

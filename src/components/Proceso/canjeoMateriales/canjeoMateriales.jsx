@@ -502,7 +502,7 @@ export function CanjeoMateriales() {
 
                         <div id="table-container">
                             <h1>Detalles del canjeo</h1>
-                                <table >
+                            <table border="1" cellPadding="8" style={{marginTop:'10px'}}>
                                     <thead id="table-head">
                                         <tr>
                                             <th>Material</th>

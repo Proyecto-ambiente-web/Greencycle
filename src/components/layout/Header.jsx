@@ -231,22 +231,22 @@ function Header() {
                         >
                             Procesos
                         </Button>
-                        <Button
-                            key="Reportes"
-                            onClick={handleOpenReportesMenu}
-                            sx={{
-                                my: 2,
-                                color: "white",
-                                "&:hover": {
-                                    backgroundColor: "secondary.main",
-                                },
-                                display: "block",
-                            }}
-                        >
-                            Reportes
-                        </Button>
-
-
+                        {user && autorize({ allowedRoles: ['Administrador', 'Administrador centro acopio'] }) &&
+                            <Button
+                                key="Reportes"
+                                onClick={handleOpenReportesMenu}
+                                sx={{
+                                    my: 2,
+                                    color: "white",
+                                    "&:hover": {
+                                        backgroundColor: "secondary.main",
+                                    },
+                                    display: "block",
+                                }}
+                            >
+                                Reportes
+                            </Button>
+                        }
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
@@ -457,8 +457,6 @@ function Header() {
                                     <MenuItem component='a' href='/ReporteXAdmin'>
                                         <Typography textAlign="center">Reportes del centro</Typography>
                                     </MenuItem>
-
-
                                 </MenuList>
                             }
 
@@ -466,11 +464,7 @@ function Header() {
                                 <MenuItem component='a' href='/ReporteXAdminAplicacion'>
                                     <Typography textAlign="center">Reporte Administración</Typography>
                                 </MenuItem>
-
                             }
-                            <MenuItem onClick={handleCloseReportesMenu}>
-                                <Typography textAlign="center">Reporte 3</Typography>
-                            </MenuItem>
                         </Menu>
 
                     }

@@ -13,9 +13,8 @@ export function Home() {
             >
             GreenCycle
             </Typography>
-            <Typography variant='h5' align='center' color='text.secondary' paragraph>
-                Consulta toda la información sobre películas de cine en nuestra base de
-                datos.
+            <Typography variant='h6' align='center' color='text.secondary' paragraph>
+           Canjea tus eco-monedas por un futuro más verde, cosechando descuentos y cupones eco-amigables mientras transformas tus acciones en semillas de sostenibilidad digital
             </Typography>
         </Container>
     )

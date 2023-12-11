@@ -19,6 +19,12 @@ import CuponUsuarioService from "../../services/CuponUsuarioService";
 export function CanjeCupones() {
     const navigate = useNavigate();
 
+    const obtenerFechaActual = () => {
+        const fecha = new Date();
+        const formatoFecha = `${fecha.getFullYear()}-${(fecha.getMonth() + 1).toString().padStart(2, '0')}-${fecha.getDate().toString().padStart(2, '0')}`;
+        return formatoFecha;
+   };
+
     //Error del API
     const [error, setError] = useState("");
 
@@ -71,6 +77,7 @@ export function CanjeCupones() {
                     subTotal: ''
                 },
             ],
+            fecha: obtenerFechaActual(),
             total: 0
         },
 
@@ -441,7 +448,7 @@ export function CanjeCupones() {
                         </form>
                         <div id="table-container">
                             <h1>Detalles del canjeo</h1>
-                            <table >
+                            <table border="1" cellPadding="8" style={{marginTop:'10px'}}>
                                 <thead id="table-head">
                                     <tr>
                                         <th>Cupón</th>
